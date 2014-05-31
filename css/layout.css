@@ -1,0 +1,291 @@
+/* Layout
+ * ------
+ * The page is loaded by this order:
+ *
+ * 1. Wrapper
+ * 2. Header
+ * 3. Menu
+ * 4. Highlight
+ * 5. First Sidebar
+ * 6. Content
+ * 7. Second Sidebar
+ * 8. Footer */
+
+/* Wrapper
+ * --------------
+ */
+#page {
+  width: 960px;
+  margin: 0 auto; 
+}
+
+/* Header
+ * --------------
+ */
+#page-header{
+  min-height:150px;
+  position:relative;
+}
+
+/* Header overlay
+ * --------------
+ * use this to overlay the usual header background
+ * with an image block
+ * will lay behind the Header right Region
+ */
+#header_overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  z-index:20;
+}
+
+/* Header right
+ * --------------
+ * display a Block at the right hand side of the header
+ */
+#header_right{
+  width:320px;
+  position:relative;
+  float:right;
+  z-index:25;
+  border-left:1px solid #FFFFFF;   /* show borders for debugging */
+}
+
+/* Top Menu
+ * --------------
+ */
+#menu_top{
+height:34px;
+}
+#menu_top .block-menu{
+padding:0;
+float:left;
+}
+#menu_top ul,
+#menu_top li{
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+#menu_top .menu > li{
+float:left;
+position:relative;
+}
+#menu_top .menu > li > a{
+line-height:34px;
+padding:0 1em;
+}
+#menu_top .menu > li > ul{
+position:absolute;
+left:-9999em;
+width:170%;
+}
+#menu_top .menu > li:hover > ul{
+left:auto;
+}
+#menu_top .menu  li li{
+  float:none;
+}
+
+/* region columns
+ * --------------
+ */
+.regions .region{
+  margin:0;
+  padding:0;
+}
+.regions .region .inner{
+  padding:0;
+  border-left:1px solid #FFFFFF;
+}
+.regions .first .inner{
+  border:none;
+}
+
+/* region columns single
+ * -----------------
+ * Appears if only one highlight is shown
+ */
+.regions .single{
+  width:100%;
+}
+
+/* region columns double
+ * -----------------
+ * Appears if only two highlight is shown
+ */
+.regions .double{
+  width:50%;
+  float:left;
+}
+
+/* region columns tripple
+ * -----------------
+ * Appears if all three highlight is shown
+ */
+.regions .tripple{
+  width:33.33%;
+  float:left;
+}
+/* Main
+ * ------
+ */
+#main{
+  clear:both;
+}
+
+/* Content
+ * --------------
+ * Layout rules. 
+ * Disclaimer: do not change if you're not sure you know what you're doing.s
+ */
+#content {
+  float: left;
+  width: 66%;
+}
+#content > .inner{
+  padding:0 1.5em;
+}
+
+/* Content Highlight
+ * --------------
+ */
+
+/* Sidebars
+ * --------------
+ */
+
+.sidebar{}
+
+.sidebar > .inner,
+.sidebar .block{
+  margin:0;
+  padding:0;
+}
+
+.two-sidebars .center,
+.sidebar-first .center {
+}
+
+/* About sidebars width
+ * --------------
+ * Changing the width of the sidebars is dead easy, just change the
+ * values below corresponding to the sidebar you want to modify.
+ * Make sure you keep negative values as negative values.
+ * For example, if I want to increase the width of the left sidebar
+ * to 300px, I would have to change each '190' to '300'. */
+
+/* First Sidebar
+ * --------------
+ */
+#sidebar-first {
+  float: left; 
+  width: 17%;
+}
+
+/* Second Sidebar
+ * --------------
+ */
+#sidebar-second {
+  float: right; 
+  width: 17%;
+}
+
+/* Footer
+ * --------------
+ */
+/* line 32, ../sass/layout.sass */
+footer {
+  float: none;
+  clear: both; 
+}
+
+/* Columns Inner
+ * -------------
+ * You can change the padding inside the columns without changing the
+ * width of them by just usinbg the INNER div of each column */
+/* line 76, ../sass/layout.sass */
+.inner {
+  padding: 0;
+  margin: 0; 
+}
+
+/* Navigation styles
+ * -----------------
+ * The navigation is loaded after the content, so we need to make space
+ * for it, equal to its height, so if you change the height of the navigation,
+ * remember to adapt the margin top of the content and sidebars. */
+/* line 84, ../sass/layout.sass */
+#navigation {
+}
+
+/* line 94, ../sass/layout.sass */
+.with-navigation #content,
+.with-navigation .sidebar {
+}
+
+.field-name-field-bildergalerie h3{
+  font-size:1em;
+}
+.field-name-field-bildergalerie ul{
+  padding:0;
+}
+.field-name-field-bildergalerie li{
+  list-style:none;
+  float:left;
+  width:25%;
+  padding:0;
+  margin:0;
+  text-align:center;
+}
+.field-name-field-bildergalerie li a{
+  display:block;
+  padding:3px;
+  margin:10px;
+}
+.field-name-field-bildergalerie li img{
+  border:3px solid #FFFFFF;
+  box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.5);
+  display:block;
+  width:100%;
+  height:auto;
+}
+.field-name-field-bildergalerie li.portrait img{
+  width:auto;
+  max-width:100%;
+  margin:0 auto;
+}
+
+#footer .inner{
+  clear:both;
+}
+#footer_top_regions .inner,
+#footer_bottom_regions .inner{
+  clear:none;
+}
+#footer_first,
+#footer_fourth{
+  float:left;
+}
+#footer_second,
+#footer_fifth{
+  float:right;  
+}
+#footer_first,
+#footer_second{
+  width:33%
+}
+#footer_fourth,
+#footer_fifth{
+  width:50%;  
+}
+#footer_third{
+
+}
+#footer_third .region{
+  width:33%;
+  margin:0 auto;
+}

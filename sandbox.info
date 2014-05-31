@@ -1,0 +1,55 @@
+name = sandbox
+description = sandbox Drupal 7 basis Template
+screenshot = images/screenshot.gif
+core = "7.x"
+engine = phptemplate
+
+regions[page_top] = Page top
+regions[page_first] = Page first
+regions[header] = Header
+regions[header_right] = Header right
+regions[menu_top] = Menu top
+regions[highlight_first] = Highlight first
+regions[highlight_second] = Highlight second
+regions[highlight_third] = Highlight third
+regions[help] = Help
+regions[sidebar_first] = First sidebar
+regions[content_highlight_top] = Content Highlight top
+regions[content_highlight_first] = Content Highlight first
+regions[content_highlight_second] = Content Highlight second
+regions[content_top_first] = Content top first
+regions[content_top_second] = Content top second
+regions[content] = Content
+regions[content_bottom_first] = Content bottom first
+regions[content_bottom_second] = Content bottom second
+regions[sidebar_second] = Second sidebar
+regions[footer] = Footer 
+regions[page_bottom] = Page bottom
+
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = search
+features[] = favicon
+features[] = main_menu
+features[] = secondary_menu
+
+stylesheets[all][] = css/default.css
+stylesheets[all][] = css/layout.css
+stylesheets[all][] = css/style.css
+stylesheets[print][] = css/print.css
+
+; Compass Support
+; http://drupal.org/project/compass
+compass[status] = 1
+compass[sass_dir] = sass
+compass[css_dir] = css
+
+settings[service4me_tabs] = 1
+settings[service4me_breadcrumb_separator] = »
+settings[wireframe_mode] = 0
+settings[clear_registry] = 0
+
+

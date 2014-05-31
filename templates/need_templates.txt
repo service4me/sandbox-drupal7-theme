@@ -1,0 +1,8 @@
+wanna know if any template are mogified from the defaults? 
+
+check timestamp: Mon, 15 Okt, 2012, 20:55
+
+need more templates?
+get it from # my-site/modules/system
+
+dont overwrite the template there, copy it to this directory
