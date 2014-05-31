@@ -5,7 +5,7 @@ html{
 body {
   /* Setting up font size, leading and font family
    * http://www.markboulton.co.uk/journal/comments/five-simple-steps-to-better-typography */
-  font: 0.5em/1.4 "Helvetica Neue", helvetica, Arial, sans-serif;
+  font: 0.5em/1.4 'open_sansregular', sans-serif;
   letter-spacing: 0.03em; 
 }
 
