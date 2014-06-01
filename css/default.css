@@ -76,23 +76,40 @@
   margin: 0;
   padding: 0;
 }
-
-/* Clear Floats Without Structural Markup
- * ---------------------------------------
- * http://www.positioniseverything.net/easyclearing.html */
-.clearfix:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
+/* Font size to 10px at body */
+html{
+  font-size:1.25em;
+}
+body {
+  font-size: 0.5em;
 }
 
-.clearfix {
-  display: block;
+/* List styles. */
+ul          { list-style-type: disc;   }
+ul ul       { list-style-type: circle; }
+ul ul ul    { list-style-type: square; }
+ul ul ul ul { list-style-type: circle; }
+
+ol       { list-style-type: decimal;     }
+ol ol    { list-style-type: lower-alpha; }
+ol ol ol { list-style-type: decimal;     }
+
+/* Abbreviation. */
+abbr {
+  cursor: help;
+  white-space: nowrap; 
+}
+.element-invisible{
+  margin:0;
+  padding:0;
 }
 
-/* clear classes */
+/* clear classes
+ * -------------
+ * clearfix comes 
+ * from boilerplate
+ * main.css
+ */
 .clearleft, .clearl, .cleft {
   clear: left;
 }
@@ -148,18 +165,19 @@
   
 }
 
+/* DRUPAL related stuff
+ * --------------------
+ */
+
 /* bug fix with views 2 edit links. */
-/* line 72, ../sass/default.sass */
 div.view div.views-admin-links {
   width: auto;
 }
 
 /* Rollover edit links for blocks. */
-/* line 76, ../sass/default.sass */
 div.block {
   position: relative;
 }
-/* line 78, ../sass/default.sass */
 div.block .edit {
   display: none;
   position: absolute;
@@ -177,20 +195,17 @@ div.block .edit {
   -moz-box-shadow: 0 1px 3px #888888;
   -webkit-box-shadow: -1px 1px 2px #666666;
 }
-/* line 94, ../sass/default.sass */
 div.block .edit a {
   display: block;
   border: 0;
   padding: 0;
   margin: 0;
 }
-/* line 99, ../sass/default.sass */
 div.block:hover .edit {
   display: block;
 }
 
 /* Wireframe styles. */
-/* line 104, ../sass/default.sass */
 .with-wireframes #header,
 .with-wireframes #content-top,
 .with-wireframes #content-top > *,
@@ -208,34 +223,71 @@ div.block:hover .edit {
   padding: 2px;
   border: 1px solid #bbbbbb;
 }
-/* line 120, ../sass/default.sass */
 .with-wireframes .node {
   border-bottom: 1px solid #bbbbbb;
   margin-bottom: 10px;
 }
-/* line 123, ../sass/default.sass */
 .with-wireframes .block {
   margin-bottom: 3px;
 }
-/* line 125, ../sass/default.sass */
 .with-wireframes #content-top,
 .with-wireframes #content-header,
 .with-wireframes #content-area,
 .with-wireframes #content-bottom {
   margin: 0 3px 3px;
 }
-/* line 130, ../sass/default.sass */
 .with-wireframes #footer {
   margin-top: 3px;
   padding: 2px;
   border: 1px solid #cccccc;
 }
-/* line 135, ../sass/default.sass */
 .with-wireframes.with-navigation #content,
 .with-wireframes.with-navigation .sidebar {
   margin-top: 50px;
 }
-/* line 138, ../sass/default.sass */
 .with-wireframes #navigation {
   height: 50px;
 }
+/* UI improvments. */
+#edit-title {
+  font-size: 24px;
+  width: 99%; 
+}
+#system-themes-form img {
+  width: 100px; 
+}
+.form-item .description {
+  font-style: italic;
+  line-height: 1.2em;
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: #777777; 
+}
+#edit-delete {
+  color: #cc0000; 
+}
+
+/* Console, style from slate theme. */
+div.messages {
+  padding: 9px;
+  margin: 1em 0;
+  color: #003366;
+  background: #bbddff;
+  border: 1px solid #aaccee; 
+}
+div.warning {
+  color: #884400;
+  background: #ffee66;
+  border-color: #eedd55; 
+}
+div.error {
+  color: white;
+  background: #ee6633;
+  border-color: #dd5522; 
+}
+div.status {
+  color: #336600;
+  background: #ccff88;
+  border-color: #bbee77; 
+}
+

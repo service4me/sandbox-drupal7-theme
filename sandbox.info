@@ -7,22 +7,11 @@ engine = phptemplate
 regions[page_top] = Page top
 regions[page_first] = Page first
 regions[header] = Header
-regions[header_right] = Header right
-regions[menu_top] = Menu top
-regions[highlight_first] = Highlight first
-regions[highlight_second] = Highlight second
-regions[highlight_third] = Highlight third
+regions[highlight] = Highlight
 regions[help] = Help
-regions[sidebar_first] = First sidebar
-regions[content_highlight_top] = Content Highlight top
-regions[content_highlight_first] = Content Highlight first
-regions[content_highlight_second] = Content Highlight second
-regions[content_top_first] = Content top first
-regions[content_top_second] = Content top second
+regions[content_before] = Content before
 regions[content] = Content
-regions[content_bottom_first] = Content bottom first
-regions[content_bottom_second] = Content bottom second
-regions[sidebar_second] = Second sidebar
+regions[content_after] = Content after
 regions[footer] = Footer 
 regions[page_bottom] = Page bottom
 
@@ -36,8 +25,10 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
+stylesheets[all][] = includes/initializr/css/normalize.min.css
+stylesheets[all][] = includes/initializr/css/main.css
 stylesheets[all][] = css/default.css
-stylesheets[all][] = css/layout.css
+; stylesheets[all][] = css/layout.css
 stylesheets[all][] = css/style.css
 stylesheets[print][] = css/print.css
 

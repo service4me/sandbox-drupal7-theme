@@ -40,7 +40,8 @@
  * @see template_preprocess_html()
  * @see template_process()
  */
-?><!doctype html>
+?><!--[if IE_NEEDS_THIS]><![endif]-->
+<!doctype html>
 <!--[if lt IE 7 ]> <html lang="<?php echo $language->language; ?>" class="no-js ie ie6 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="<?php echo $language->language; ?>" class="no-js ie ie7 lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="<?php echo $language->language; ?>" class="no-js ie ie8 lt-ie9"> <![endif]-->
@@ -56,7 +57,7 @@
   <nav id="skip">
     <ul>
       <li><a href="#main-menu"><?php print t('Jump to Navigation'); ?></a></li>
-      <li><a href="#content"><?php print t('Jump to Content'); ?></a></li>
+      <li><a href="#main"><?php print t('Jump to Content'); ?></a></li>
     </ul>
   </nav>
   <?php print $page_top; ?>
