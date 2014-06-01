@@ -1,0 +1,9 @@
+{
+  "htmlcss": "izr-responsive",
+  "polyfill": "modernizr",
+  "respond": 1,
+  "jquerymin": 1,
+  "h5bp-iecond": 1,
+  "h5bp-chromeframe": 1,
+  "h5bp-appletouchicons": 1
+}
