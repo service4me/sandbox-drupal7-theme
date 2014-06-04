@@ -172,7 +172,7 @@
     <?php if ($page['content_before']) { ?>
       <aside id="contentBefore">
         <div id="content-before-inner" class="inner">
-          <?php print render($page['sidebar_first']); ?>
+          <?php print render($page['content_before']); ?>
         </div>
       </div>
     <?php } else { ?> <!-- /sidebar-first -->

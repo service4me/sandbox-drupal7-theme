@@ -185,10 +185,10 @@ function sandbox_breadcrumb($variables) {
  * - Converts entire string to lowercase.
  *
  * @param $string
- * 	The string
+ *  The string
  * @return
- * 	The converted string
- */	
+ *  The converted string
+ */ 
 function sandbox_id_safe($string) {
   // Replace with dashes anything that isn't A-Z, numbers, dashes, or underscores.
   $string = strtolower(preg_replace('/[^a-zA-Z0-9_-]+/', '-', $string));
