@@ -17,44 +17,6 @@ if (theme_get_setting('sandbox_tabs')) {
   drupal_add_css( drupal_get_path('theme', 'sandbox') .'/css/tabs.css');
 }
 
-function sandbox_library(){
-
-  $theme_path = drupal_get_path('theme', 'sandbox');
-
-  $items = array();
-
-  $items['modernizr'] = array(
-    'title' => 'Modernizr',
-    'website' => 'http://modernizr.com',
-    'version' => '2.6.2',
-    'js' => array(
-      $theme_path . '/includes/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' => array(
-        'group' => JS_LIBRARY,
-        'weight' => -21,
-      )
-    )
-  );
-
-  $items['jquery.migrate'] = array(
-    'title' => 'jQuery migrate',
-    'website' => 'https://github.com/jquery/jquery-migrate/#readme',
-    'version' => '1.2.1',
-    'js' => array(
-      $theme_path . '/includes/jquery-migrate/jquery-migrate-1.2.1.min.js' => array(
-        'group' => JS_LIBRARY,
-        'weight' => -19.5,
-      )
-    )
-  );
-
-  return $items;
-}
-
-if (!module_exists('modernizr')) {
-  drupal_add_library('sandbox', 'modernizr');
-}
-drupal_add_library('sandbox', 'jquery.migrate');
-
 function sandbox_js_alter(&$javascript){
 
   $theme_path = drupal_get_path('theme', 'sandbox');
