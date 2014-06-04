@@ -79,7 +79,7 @@
 
   <!-- ______________________ HEADER _______________________ -->
   <div class="header-container">
-  <header class="wrapper clearfix">
+  <header class="wrapper clearfix site-header">
       
     <?php 
     /*
@@ -237,9 +237,11 @@
   <!-- ______________________ FOOTER _______________________ -->
 
   <?php if ( $page['footer'] ) : ?>
-    <footer class="region">
-      <?php print render($page['footer']); ?>
-    </footer> <!-- /footer -->
+    <div class="footer-container">
+      <footer class="region wrapper clearfix site-footer">
+        <?php print render($page['footer']); ?>
+      </footer> <!-- /footer -->
+    </div>
   <?php endif; ?>
 
 </div> <!-- /page -->

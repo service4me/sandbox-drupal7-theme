@@ -92,35 +92,87 @@ nav a:visited{
   color:#222222;
 }
 /* Region Colors. delete or edit when starting a new theme. */
+.main > aside{
+  background:none;
+  border:none;
+  color:#444444;
+  box-shadow: none;
+}
 .header-container, 
 .footer-container,
-.main aside {
-  background: #fbc242; 
+.main article aside {
+  background: #fbc242;
   border-color:#FFE80F;
-  margin:0 0 1em 1em;
+  -webkit-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2), inset 0 0 30px 0 rgba(255, 232, 15, 0.8);
+  box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2), inset 0 0 30px 0 rgba(255, 232, 15, 0.8);
 }
 .ie9 .header-container, 
 .ie9 .footer-container,
-.ie9 .main aside{
+.ie9 .main article aside{
   filter: none;
 }
 .header-container{}
 .footer-container {}
-#secondary{
+#secondary{}
+.site-header{
+  position:relative;;
+}
+.name-slogan{
+
+}
+#logo{
+display:block;
+float:left;
+margin:1em 2em 1em 0;
+}
+#site-slogan{
+  font-family:Georgia, sans-serif;
+  font-style: italic;
+  font-size:1.5em;
+}
+.main .articles{
+  float:left;
+  width:57%;
+}
+.articles article,
+.region-content .node{
+  float:none;
+  width:auto;
+  padding:2em 0;
+}
+.articles article + article,
+.region-content .node + .node{
+  border-top:1px solid #FBC53F;
+}
+.content{
+  font-size:1.4em;
+}
+.content .content{
+  font-size:1em;
 }
 .main aside{
   padding:0;
   width:38%;
+  margin:0 0 1em 1em;
 }
 .main aside .title{
-  padding:0.8em 10%;
-  margin:0;
-  background:#FFE80F;
+  padding:0;
+  margin:0 0 0.8em 0;
+  color:#444444;
+  font-size:1.6em;
 }
 .main aside .menu,
 .main aside .block,
 .main aside .widget{
   margin:0 0 2em 0;
+  padding:2em 10%;
+  /*
+  -webkit-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2), inset 0 0 15px 0 rgba(255, 232, 15, 0.35);
+  box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2), inset 0 0 30px 0 rgba(255, 232, 15, 0.35);
+  */
+  -webkit-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2), inset 0 0 30px 0 rgba(251, 197, 63, 1);
+  box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2), inset 0 0 30px 0 rgba(251, 197, 63, 1);
+  background:#FFE80F;
 }
 .main aside ul{
   padding:0;
@@ -130,35 +182,17 @@ nav a:visited{
   list-style:none;
   font-size:1.2em;
   padding:0.8em 10%;
-  border-bottom:1px solid #FFE80F;
 }
-#logo{
-display:block;
-float:left;
-margin:0 1em 1em 0;
+.main aside li + li{
+  border-top:1px solid #FFE80F;
 }
-#site-slogan{
-  font-family:Georgia, sans-serif;
-  font-style: italic;
-  font-size:1.5em;
+.main > aside li{
+  padding-left:0;
+  padding-right:0;
 }
-.content{
-  font-size:1.4em;
+.main > aside li + li{
+  border-color:#FBC53F;
 }
-.content .content{
-  font-size:1em;
-}
-/* line 160, ../sass/style.sass */
-#sidebar-first {
-  background: #e7edff; }
-
-/* line 163, ../sass/style.sass */
-#sidebar-second {
-  background: #ffd075; }
-
-/* line 166, ../sass/style.sass */
-#navigation {
-  background: #feffa5; }
 
 /* user menu */
 #page_top-region{

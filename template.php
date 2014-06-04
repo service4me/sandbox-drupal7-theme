@@ -17,11 +17,92 @@ if (theme_get_setting('sandbox_tabs')) {
   drupal_add_css( drupal_get_path('theme', 'sandbox') .'/css/tabs.css');
 }
 
+function sandbox_library(){
+
+  $theme_path = drupal_get_path('theme', 'sandbox');
+
+  $items = array();
+
+  $items['modernizr'] = array(
+    'title' => 'Modernizr',
+    'website' => 'http://modernizr.com',
+    'version' => '2.6.2',
+    'js' => array(
+      $theme_path . '/includes/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' => array(
+        'group' => JS_LIBRARY,
+        'weight' => -21,
+      )
+    )
+  );
+
+  $items['jquery.migrate'] = array(
+    'title' => 'jQuery migrate',
+    'website' => 'https://github.com/jquery/jquery-migrate/#readme',
+    'version' => '1.2.1',
+    'js' => array(
+      $theme_path . '/includes/jquery-migrate/jquery-migrate-1.2.1.min.js' => array(
+        'group' => JS_LIBRARY,
+        'weight' => -19.5,
+      )
+    )
+  );
+
+  return $items;
+}
+
+if (!module_exists('modernizr')) {
+  drupal_add_library('sandbox', 'modernizr');
+}
+drupal_add_library('sandbox', 'jquery.migrate');
+
+function sandbox_js_alter(&$javascript){
+
+  $theme_path = drupal_get_path('theme', 'sandbox');
+
+  $jQuery_version = '1.11.0';
+  $jQuery_migrate_version = '1.2.1';
+  $modernizr_version = '2.6.2';
+
+  $jQuery_path = $theme_path . '/includes/initializr/js/vendor/jquery-1.11.0.min.js';
+  $jQuery_migrate_path = $theme_path . '/includes/jquery-migrate/jquery-migrate-1.2.1.min.js';
+  $modernizr_path = $theme_path . '/includes/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js';
+ 
+  if (!module_exists('modernizr')) {
+    drupal_add_js($modernizr_path, array(
+      'group' => JS_LIBRARY,
+      'every_page' => true,
+      'version' => $modernizr_version,
+      'weight' => -21
+    ));
+  }
+
+  $javascript['misc/jquery.js']['data'] = $jQuery_path;
+  $javascript['misc/jquery.js']['version'] = $jQuery_version;
+
+  drupal_add_js($jQuery_migrate_path, array(
+    'group' => JS_LIBRARY,
+      'every_page' => true,
+      'version' => $jQuery_migrate_version,
+    'weight' => -19.5
+  ));
+  
+}
+
+function sandbox_preprocess(&$vars) {
+}
+
+function sandbox_preprocess_html(&$vars) {
+
+}
+
 function sandbox_preprocess_page(&$vars, $hook) {
   if (isset($vars['node_title'])) {
     $vars['title'] = $vars['node_title'];
   }
-  // Adding a class to #page in wireframe mode
+  
+  $vars['classes_array'][] = 'wrapper';
+  $vars['classes_array'][] = 'wrapper';
+  // Adding a class to #main in wireframe mode
   if (theme_get_setting('wireframe_mode')) {
     $vars['classes_array'][] = 'wireframe-mode';
   }
