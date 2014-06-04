@@ -80,9 +80,25 @@ abbr {}
 .element-invisible{}
 
 /* Navigations */
+.main nav{
+  float:none;
+  width:auto;
+}
+.main nav li{
+  display:block;
+  margin:0;
+}
 nav a{
   background:#FFE80F;
   white-space: nowrap;
+}
+.main nav a{
+  float:none;
+  width:auto;
+  padding:0;
+  margin:0;
+  text-align:left;
+  background:none;
 }
 nav a:link,
 nav a:visited{
@@ -144,8 +160,11 @@ margin:1em 2em 1em 0;
 .region-content .node + .node{
   border-top:1px solid #FBC53F;
 }
+.articles article .title{
+  font-size:2em;
+}
 .content{
-  font-size:1.4em;
+  font-size:1.6em;
 }
 .content .content{
   font-size:1em;
@@ -161,7 +180,7 @@ margin:1em 2em 1em 0;
   color:#444444;
   font-size:1.6em;
 }
-.main aside .menu,
+/* .main aside .menu */
 .main aside .block,
 .main aside .widget{
   margin:0 0 2em 0;
@@ -182,6 +201,7 @@ margin:1em 2em 1em 0;
   list-style:none;
   font-size:1.2em;
   padding:0.8em 10%;
+  margin:0;
 }
 .main aside li + li{
   border-top:1px solid #FFE80F;
@@ -233,13 +253,13 @@ margin:1em 2em 1em 0;
   -webkit-box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.5);
   box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.5);
 }
-#block-menu-menu-user-tasks{
+.region-navbar #block-menu-menu-user-tasks{
   float:left;
 }
-#block-system-user-menu{
+.region-navbar #block-system-user-menu{
   float:right;
 }
-#block-menu-menu-user-tasks .home a {
+.region-navbar #block-menu-menu-user-tasks .home a {
     background-image: url(../images/toolbar.png);
     background-position:6px -45px;
     background-repeat:no-repeat;
@@ -248,7 +268,7 @@ margin:1em 2em 1em 0;
     vertical-align: text-bottom;
     width: 11px;
 }
-#block-menu-menu-user-tasks div.contextual-links-wrapper{
+.region-navbar #block-menu-menu-user-tasks div.contextual-links-wrapper{
   right:-30px;
 }
 

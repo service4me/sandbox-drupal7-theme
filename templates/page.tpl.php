@@ -71,7 +71,6 @@
  */
 ?>
 <?php if ($page['page_first']): ?>
-  <?php //echo var_dump($page); ?>
   <div id="page_top" class="clearfix region">
     <?php print render($page['page_first']); ?>
   </div>
@@ -153,6 +152,12 @@
     </header> <!-- /header -->
   </div>
 
+    <?php // echo var_dump($sandbox_page_elements); ?>
+
+  <?php 
+
+  ?>
+
 <div id="page" class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <!-- ______________________ HIGHLIGHT _______________________ -->
 
@@ -174,7 +179,7 @@
         <div id="content-before-inner" class="inner">
           <?php print render($page['content_before']); ?>
         </div>
-      </div>
+      </aside>
     <?php } else { ?> <!-- /sidebar-first -->
 
       <?php if ($secondary_menu): ?>
@@ -221,7 +226,7 @@
         <?php print $feed_icons; ?>
 
       </div>
-    </article> <!-- /content-inner /content -->
+    </article> <!-- /content -->
 
     <?php if ($page['content_after']): ?>
       <aside id="contenAfter">
@@ -229,7 +234,7 @@
           <?php print render($page['content_after']); ?>
         </div>
       </aside>
-    <?php endif; ?> <!-- /sidebar-second -->
+    <?php endif; ?> <!-- /content-after -->
 
   </section> <!-- /main -->
 </div>

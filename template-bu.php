@@ -105,13 +105,14 @@ function sandbox_preprocess_html(&$vars) {
 }
 
 function sandbox_preprocess_page(&$vars, $hook) {
-
+/*
   // introducing page variables to the sandbox
   if ( !isset($vars['sandbox']['page']) ) {
     $vars['sandbox']['page'] = array();
-  } 
-
-  $vars['sandbox']['page']['elements'] = array();
+  }
+*/
+  $vars['sandbox']['page'] = array();
+  $vars['sandbox']['page']['elements'] => array();
 
   if (isset($vars['node_title'])) {
     $vars['title'] = $vars['node_title'];

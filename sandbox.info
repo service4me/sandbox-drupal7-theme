@@ -38,9 +38,9 @@ compass[status] = 1
 compass[sass_dir] = sass
 compass[css_dir] = css
 
-settings[service4me_tabs] = 1
-settings[service4me_breadcrumb_separator] = »
+settings[sandbox_tabs] = 1
+settings[sandbox_breadcrumb_separator] = »
 settings[wireframe_mode] = 0
-settings[clear_registry] = 0
+settings[clear_registry] = 1
 
 
