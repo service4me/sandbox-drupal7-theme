@@ -4,7 +4,7 @@
  * Here we override the default HTML output of drupal.
  * refer to http://drupal.org/node/550722
  */
- 
+
 // Auto-rebuild the theme registry during theme development.
 if (theme_get_setting('clear_registry')) {
   // Rebuild .info data.
@@ -29,7 +29,7 @@ function sandbox_js_alter(&$javascript){
   $jQuery_path = '/includes/initializr/js/vendor/jquery-' . $jQuery_version . '.min.js';
   $jQuery_migrate_path = '/includes/jquery-migrate/jquery-migrate-' . $jQuery_migrate_version . '.min.js';
   $modernizr_path = '/includes/initializr/js/vendor/modernizr-' . $modernizr_version . '-respond-1.1.0.min.js';
- 
+
   if (!module_exists('modernizr')) {
     drupal_add_js($base_path . $theme_path . $modernizr_path, array(
       'group' => JS_LIBRARY,
@@ -42,14 +42,14 @@ function sandbox_js_alter(&$javascript){
   if (!module_exists('jquery_update')) {
     $javascript['misc/jquery.js']['data'] = $base_path . $theme_path . $jQuery_path;
     $javascript['misc/jquery.js']['version'] = $jQuery_version;
-    
+
     drupal_add_js($base_path . $theme_path . $jQuery_migrate_path, array(
       'group' => JS_LIBRARY,
       'every_page' => true,
       'version' => $jQuery_migrate_version,
       'weight' => -19.5
     ));
-  }  
+  }
 }
 
 /**
@@ -70,27 +70,7 @@ function sandbox_preprocess(&$vars, $hook){
 }
 
 function sandbox_preprocess_html(&$vars) {
-/*
-  // introducing page variables to the sandbox
-  if ( !isset($vars['sandbox']['page']) ) {
-    $vars['sandbox']['page'] = array();
-  }
 
-  $vars['sandbox']['page']['has_block_system_main_menu'] = false;
-  $vars['sandbox']['page']['regions'] = array();
-  $vars['sandbox']['page']['classes_array'] = array();
-
-  foreach ( $vars['page'] as $region => $blocks ) {
-    if ( strpos($region, '#') === false && is_int($region) === false ) { // otherwise its no region
-      $vars['sandbox']['page']['regions'][] = $region;
-      foreach( $blocks as $blockName => $blockContent ) {
-        if ( $blockName === 'system_main-menu' ) {
-          $vars['sandbox']['page']['has_block_system_main_menu'] = true;
-        }
-      }
-    } 
-  }
-*/
   // Adding a class to #main in wireframe mode
   if ($vars['sandbox']['settings']['wireframe_mode']) {
     $vars['classes_array'][] = 'wireframe-mode';
@@ -102,6 +82,34 @@ function sandbox_preprocess_html(&$vars) {
   if (!empty($vars['secondary_menu'])) {
     $vars['classes_array'][] = 'with-subnav';
   }
+
+  // Classes for body element. Allows advanced theming based on context
+  // (home page, node of certain type, etc.)
+  if (!$vars['is_front']) {
+    // Add unique class for each page.
+    $path = drupal_get_path_alias($_GET['q']);
+    // Add unique class for each website section.
+    $pathArray = explode('/', $path);
+    $section = $pathArray[0];
+
+    if ( $pathArray[0] == 'node' ) {
+      if ( $pathArray[1] == 'add' ) {
+        $section = 'node-add';
+      } elseif ( is_numeric($pathArray[1]) && ( $pathArray[2] == 'edit' || $pathArray[2] == 'delete' ) ) {
+        $section = 'node-' . $pathArray[2];
+      }
+      // MAGIC BEGINS HERE
+      $node = node_load($pathArray[1]);
+      $results = field_view_field('node', $node, 'field_tags', array('default'));
+      foreach ($results as $key => $result) {
+        if (is_numeric($key)) {
+          $vars['classes_array'][] = drupal_html_class($result['#title']);
+        }
+      }
+      // MAGIC ENDS HERE
+    }
+    $vars['classes_array'][] = drupal_html_class($section);
+  }
 }
 
 function sandbox_preprocess_page(&$vars, $hook) {
@@ -109,17 +117,17 @@ function sandbox_preprocess_page(&$vars, $hook) {
   // introducing page variables to the sandbox
   if ( !isset($vars['sandbox']['page']) ) {
     $vars['sandbox']['page'] = array();
-  } 
+  }
 
   $vars['sandbox']['page']['elements'] = array();
 
   if (isset($vars['node_title'])) {
     $vars['title'] = $vars['node_title'];
   }
-    
+
   // Add first/last classes to node listings about to be rendered.
   if (isset($vars['page']['content']['system_main']['nodes'])) {
-    
+
     // adding a new element to page
     $vars['sandbox']['page']['elements']['root'] = array(
       'type' => 'section',
@@ -127,7 +135,7 @@ function sandbox_preprocess_page(&$vars, $hook) {
         'class' => 'articles',
       ),
     );
-    
+
     // All nids about to be loaded (without the #sorted attribute).
     $nids = element_children($vars['page']['content']['system_main']['nodes']);
     // Only add first/last classes if there is more than 1 node being rendered.
@@ -199,7 +207,7 @@ function sandbox_breadcrumb($variables) {
 
     // Return the breadcrumb with separators.
     if (!empty($breadcrumb)) {
-      $breadcrumb_separator = $vars['sandbox']['settings']['breadcrumb_separator'];
+      $breadcrumb_separator = $variables['sandbox']['settings']['breadcrumb_separator'];
       $trailing_separator = $title = '';
       if (theme_get_setting('sandbox_breadcrumb_title')) {
         $item = menu_get_item();
@@ -243,7 +251,7 @@ function sandbox_breadcrumb($variables) {
  *  The string
  * @return
  *  The converted string
- */ 
+ */
 function sandbox_id_safe($string) {
   // Replace with dashes anything that isn't A-Z, numbers, dashes, or underscores.
   $string = strtolower(preg_replace('/[^a-zA-Z0-9_-]+/', '-', $string));
@@ -265,7 +273,7 @@ function sandbox_id_safe($string) {
  *  A themed HTML string.
  *
  * @ingroup themeable
- * 
+ *
  */
 function sandbox_menu_link(array $variables){
 
@@ -291,8 +299,8 @@ function sandbox_menu_link(array $variables){
     // Adding a class to determine the user link
     $element['#attributes']['class'][] = 'user_link';
 
-  } 
-    
+  }
+
   $output = l($element['#title'], $element['#href'], $element['#localized_options']);
 
   // Adding a class depending on the TITLE of the link (not constant)
@@ -323,7 +331,7 @@ function sandbox_preprocess_menu_local_task(&$variables) {
 /**
  * Duplicate of theme_menu_local_tasks() but adds clearfix to tabs.
  */
-function sandbox_menu_local_tasks(&$variables) {  
+function sandbox_menu_local_tasks(&$variables) {
   $output = '';
 
   if (!empty($variables['primary'])) {
@@ -346,11 +354,11 @@ function sandbox_detect_orientation($height, $width){
 
   $orientation = array(
 
-    'height' => $height, 
-    'width' => $width, 
-    'portrait' => false, 
-    'landscape' => false, 
-    'quadratic' => false, 
+    'height' => $height,
+    'width' => $width,
+    'portrait' => false,
+    'landscape' => false,
+    'quadratic' => false,
 
   );
 

@@ -12,7 +12,7 @@ regions[help] = Help
 regions[content_before] = Content before
 regions[content] = Content
 regions[content_after] = Content after
-regions[footer] = Footer 
+regions[footer] = Footer
 regions[page_bottom] = Page bottom
 
 features[] = logo
@@ -39,8 +39,7 @@ compass[sass_dir] = sass
 compass[css_dir] = css
 
 settings[sandbox_tabs] = 1
+settings[toggle_breadcrumb] = 0
 settings[sandbox_breadcrumb_separator] = »
 settings[wireframe_mode] = 0
 settings[clear_registry] = 1
-
-
