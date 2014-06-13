@@ -15,7 +15,13 @@ function sandbox_form_system_theme_settings_alter(&$form, $form_state) {
     '#description'   => t('Check this if you wish to replace the default tabs by the ZEN tabs'),
     '#default_value' => theme_get_setting('sandbox_tabs'),
   );
-  
+  $form['options_settings']['sandbox_classes'] = array(
+    '#type' => 'checkbox',
+    '#title' =>  t('Use Semantic classNames'),
+    '#description'   => t('Check this if you wish to use semantic classes by the theme'),
+    '#default_value' => theme_get_setting('sandbox_classes'),
+  );
+
   $form['options_settings']['sandbox_breadcrumb'] = array(
     '#type'          => 'fieldset',
     '#title'         => t('Breadcrumb settings'),
@@ -58,7 +64,7 @@ function sandbox_form_system_theme_settings_alter(&$form, $form_state) {
     '#description'   => t('Useful when the breadcrumb is not placed just before the title.'),
     '#suffix'        => '</div>', // #div-sandbox-breadcrumb
   );
-  
+
   $form['options_settings']['wireframe_mode'] = array(
     '#type' => 'checkbox',
     '#title' =>  t('Wireframe Mode - Display borders around main layout elements'),
@@ -71,5 +77,5 @@ function sandbox_form_system_theme_settings_alter(&$form, $form_state) {
     '#description'   =>t('During theme development, it can be very useful to continuously <a href="!link">rebuild the theme registry</a>. WARNING: this is a huge performance penalty and must be turned off on production websites.', array('!link' => 'http://drupal.org/node/173880#theme-registry')),
     '#default_value' => theme_get_setting('clear_registry'),
   );
-  
+
 }

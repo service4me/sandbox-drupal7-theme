@@ -7,6 +7,7 @@ engine = phptemplate
 regions[page_top] = Page top
 regions[page_first] = Page first
 regions[header] = Header
+regions[menu_bar] = Menu Bar
 regions[highlight] = Highlight
 regions[help] = Help
 regions[content_before] = Content before
@@ -39,6 +40,7 @@ compass[sass_dir] = sass
 compass[css_dir] = css
 
 settings[sandbox_tabs] = 1
+settings[sandbox_classes] = 1
 settings[toggle_breadcrumb] = 0
 settings[sandbox_breadcrumb_separator] = »
 settings[wireframe_mode] = 0

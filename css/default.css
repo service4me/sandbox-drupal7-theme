@@ -2,7 +2,7 @@
  * font-family declarations
  * =========================
  * must stay on top
- * look at ../fonts/open-sans.css 
+ * look at ../fonts/open-sans.css
  * for dokumentation
  */
 @font-face {
@@ -66,12 +66,70 @@
     font-style: normal;
 }
 
+/* Reset initializr style settings
+ * -------------------------------
+ * can be safely deleted if
+ * initializr main.css is removed
+ */
+/* Wrapper */
+.wrapper{
+  width:auto;
+  margin:0;
+}
+body > .container > .wrapper{
+  /* fixed layout, set your value * 10
+  width:98.7em;
+  */
+  /* fluid layout, set your value as %
+  */
+  width:90%;
+  margin:0 auto;
+}
+/* Title */
+.title{
+  color:inherit;
+  float:none;
+}
+/* Sidebars */
+.main aside{
+  padding:0;
+  width:38%;
+  margin:0 0 1em 0;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  background:none;
+  border:none;
+}
+/* Nav */
+nav{
+  float:none;
+  width:auto;
+}
+nav ul li{
+  display:block;
+  display:list-item;
+}
+nav a{
+  float:none;
+  padding:0;
+  margin:0;
+  width:auto;
+  display:block;
+  background:none;
+  text-align:left;
+}
+nav a:link,
+nav a:visited{
+  color:inherit;
+}
+
 /* About Default Styles
  * ---------------------
  * default.css is used to establish general rules, browser reset, or admin user interface styles.
  * Browser Reset
  * -------------
- * For a more complete reset, go to http://developer.yahoo.com/yui/reset/ */
+ * For a more complete reset, go to http://developer.yahoo.com/yui/reset/
+ */
 * {
   margin: 0;
   padding: 0;
@@ -82,6 +140,21 @@ html{
 }
 body {
   font-size: 0.5em;
+}
+body > .debug > .inner{
+  /* fixed layout, set your value * 10
+  width:94.7em;
+  */
+  /* fluid layout, set your value as %
+  */
+  width:86%;
+  padding:0.1em 2% 0.3em 2%;
+  margin-top:1em;
+  margin-bottom:1em;
+  -webkit-box-shadow:inset 0 0 40px 0 rgba(255, 0, 0, 0.1), 0 0 7px -2px rgba(0, 0, 0, 0.3);
+  box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 0 7px -2px rgba(0, 0, 0, 0.3);
+  background:#E34D26;
+  color:#FFFFFF;
 }
 
 /* List styles. */
@@ -97,7 +170,7 @@ ol ol ol { list-style-type: decimal;     }
 /* Abbreviation. */
 abbr {
   cursor: help;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 .element-invisible{
   margin:0;
@@ -106,7 +179,7 @@ abbr {
 
 /* clear classes
  * -------------
- * clearfix comes 
+ * clearfix comes
  * from boilerplate
  * main.css
  */
@@ -162,7 +235,7 @@ abbr {
   border:1px solid #111111;
   -webkit-box-shadow:  0px 0px 0px 10px rgba(0, 0, 0, 0.3);
   box-shadow:  0px 0px 0px 10px rgba(0, 0, 0, 0.3);
-  
+
 }
 
 /* DRUPAL related stuff
@@ -251,20 +324,20 @@ div.block:hover .edit {
 /* UI improvments. */
 #edit-title {
   font-size: 24px;
-  width: 99%; 
+  width: 99%;
 }
 #system-themes-form img {
-  width: 100px; 
+  width: 100px;
 }
 .form-item .description {
   font-style: italic;
   line-height: 1.2em;
   font-size: 0.8em;
   margin-top: 5px;
-  color: #777777; 
+  color: #777777;
 }
 #edit-delete {
-  color: #cc0000; 
+  color: #cc0000;
 }
 
 /* Console, style from slate theme. */
@@ -273,21 +346,20 @@ div.messages {
   margin: 1em 0;
   color: #003366;
   background: #bbddff;
-  border: 1px solid #aaccee; 
+  border: 1px solid #aaccee;
 }
 div.warning {
   color: #884400;
   background: #ffee66;
-  border-color: #eedd55; 
+  border-color: #eedd55;
 }
 div.error {
   color: white;
   background: #ee6633;
-  border-color: #dd5522; 
+  border-color: #dd5522;
 }
 div.status {
   color: #336600;
   background: #ccff88;
-  border-color: #bbee77; 
+  border-color: #bbee77;
 }
-

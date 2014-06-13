@@ -56,31 +56,43 @@ function sandbox_js_alter(&$javascript){
  * Implements template_preprocess().
  */
 function sandbox_preprocess(&$vars, $hook){
+
   if ( !isset($vars['sandbox']) ) {
     $vars['sandbox'] = array(
       'settings' => array(
-        'tabs' => theme_get_setting('sandbox_tabs'),
+        'tabs' => filter_var(theme_get_setting('sandbox_tabs'), FILTER_VALIDATE_BOOLEAN),
+        'classes' => filter_var(theme_get_setting('sandbox_classes'), FILTER_VALIDATE_BOOLEAN),
         'breadcrumb_separator' => theme_get_setting('sandbox_breadcrumb_separator'),
-        'wireframe_mode' => theme_get_setting('wireframe_mode'),
-        'clear_registry' => theme_get_setting('clear_registry'),
+        'wireframe_mode' => filter_var(theme_get_setting('wireframe_mode'), FILTER_VALIDATE_BOOLEAN),
+        'clear_registry' => filter_var(theme_get_setting('clear_registry'), FILTER_VALIDATE_BOOLEAN),
+        'debug' => false,
       ),
+      'debug' => '',
       'path' => drupal_get_path('theme', 'sandbox'),
+      'classes_array' => array(),
+      'classes' => '',
+      'page' => array(
+        'elements' => array(),
+      )
     );
   }
 }
 
 function sandbox_preprocess_html(&$vars) {
 
+  $theme = $vars['sandbox'];
+  $page = $vars['page'];
+
   // Adding a class to #main in wireframe mode
-  if ($vars['sandbox']['settings']['wireframe_mode']) {
-    $vars['classes_array'][] = 'wireframe-mode';
+  if ($theme['settings']['wireframe_mode']) {
+    $theme['classes_array'][] = 'wireframe-mode';
   }
   // Adding classes wether #navigation is here or not
   if (!empty($vars['main_menu']) or !empty($vars['sub_menu'])) {
-    $vars['classes_array'][] = 'with-navigation';
+    $theme['classes_array'][] = 'with-navigation';
   }
   if (!empty($vars['secondary_menu'])) {
-    $vars['classes_array'][] = 'with-subnav';
+    $theme['classes_array'][] = 'with-subnav';
   }
 
   // Classes for body element. Allows advanced theming based on context
@@ -103,59 +115,107 @@ function sandbox_preprocess_html(&$vars) {
       $results = field_view_field('node', $node, 'field_tags', array('default'));
       foreach ($results as $key => $result) {
         if (is_numeric($key)) {
-          $vars['classes_array'][] = drupal_html_class($result['#title']);
+          $theme['classes_array'][] = drupal_html_class($result['#title']);
         }
       }
       // MAGIC ENDS HERE
     }
     $vars['classes_array'][] = drupal_html_class($section);
   }
+
+  // Do we have nodes?
+  if ( isset($page['content']['system_main']['nodes']) ) {
+    // All nIds about to be loaded (without the #sorted attribute).
+    $theme['page']['node_ids'] = element_children($vars['page']['content']['system_main']['nodes']);
+
+    // More then one?
+    if ( count($theme['page']['node_ids']) > 1 ) {
+      $theme['page']['type'] = 'archive';
+    } else {
+      $theme['page']['type'] = 'single';
+    }
+
+  } else {
+    // no Nodes means you have a collection of something else
+    $theme['page']['type'] = 'collection';
+  }
+
+  // shorthand variables
+  $vars['classes_array'][] = $theme['page']['type'];
+
+  // $theme['debug'] = $theme['page']['node_ids'];
+  // $theme['debug'] = $vars['page']['content']['system_main']['nodes'];
+  // echo var_dump($theme['page']['type']);
+  $vars['sandbox'] = $theme;
 }
 
 function sandbox_preprocess_page(&$vars, $hook) {
 
-  // introducing page variables to the sandbox
-  if ( !isset($vars['sandbox']['page']) ) {
-    $vars['sandbox']['page'] = array();
-  }
+  // get the theme variable
+  $theme = $vars['sandbox'];
+  $page = $vars['page'];
 
-  $vars['sandbox']['page']['elements'] = array();
+  // introducing page variables to the sandbox
+  $theme['page'] = array(
+    'elements' => array(),
+    // 'source' => $page,
+  );
+
+  // Do we have nodes?
+  if ( isset($page['content']['system_main']['nodes']) ) {
+    // All nIds about to be loaded (without the #sorted attribute).
+    $theme['page']['node_ids'] = element_children($vars['page']['content']['system_main']['nodes']);
+
+    // More then one?
+    if ( count($theme['page']['node_ids']) > 1 ) {
+      $theme['page']['type'] = 'archive';
+    } else {
+      $theme['page']['type'] = 'single';
+    }
+
+  } else {
+    // no Nodes means you have a collection of something else
+    $theme['page']['type'] = 'collection';
+
+  }
 
   if (isset($vars['node_title'])) {
     $vars['title'] = $vars['node_title'];
   }
 
   // Add first/last classes to node listings about to be rendered.
-  if (isset($vars['page']['content']['system_main']['nodes'])) {
+  if ( $theme['page']['type'] == 'archive' ) {
 
-    // adding a new element to page
+    // adding a new element to the page
     $vars['sandbox']['page']['elements']['root'] = array(
       'type' => 'section',
       'attributes' => array(
-        'class' => 'articles',
+        'class' => 'articles wrapper container',
       ),
     );
 
-    // All nids about to be loaded (without the #sorted attribute).
-    $nids = element_children($vars['page']['content']['system_main']['nodes']);
     // Only add first/last classes if there is more than 1 node being rendered.
-    if (count($nids) > 1) {
-      $first_nid = reset($nids);
-      $last_nid = end($nids);
-      $first_node = $vars['page']['content']['system_main']['nodes'][$first_nid]['#node'];
-      $first_node->classes_array = array('first');
-      $last_node = $vars['page']['content']['system_main']['nodes'][$last_nid]['#node'];
-      $last_node->classes_array = array('last');
-    }
+    $first_nId = reset($theme['page']['node_ids']);
+    $last_nId = end($theme['page']['node_ids']);
+    $first_node = $page['content']['system_main']['nodes'][$first_nId]['#node'];
+    $first_node->classes_array = array('first');
+    $last_node = $page['content']['system_main']['nodes'][$last_nId]['#node'];
+    $last_node->classes_array = array('last');
   }
-
   // shorthand variables
-  $vars['sandbox_page'] = $vars['sandbox']['page'];
-  $vars['sandbox_page_elements'] = $vars['sandbox']['page']['elements'];
+  $vars['sandbox_page'] = $theme['page'];
+  $vars['sandbox_page_elements'] = $theme['page']['elements'];
 
+  // $theme['debug'] = $theme['page']['node_ids'];
+  // set the new theme variable
+  $vars['sandbox'] = $theme;
 }
 
 function sandbox_preprocess_node(&$vars) {
+  // $theme = $vars['sandbox'];
+  // $theme['debug'] = $theme['classes_array'];
+  // $theme['classes'] = implode(' ', $theme['classes_array']);
+
   // Add a striping class.
   $vars['classes_array'][] = 'node-' . $vars['zebra'];
 
@@ -207,7 +267,7 @@ function sandbox_breadcrumb($variables) {
 
     // Return the breadcrumb with separators.
     if (!empty($breadcrumb)) {
-      $breadcrumb_separator = $variables['sandbox']['settings']['breadcrumb_separator'];
+      $breadcrumb_separator = isset($variables['sandbox']['settings']['breadcrumb_separator']) ? $variables['sandbox']['settings']['breadcrumb_separator'] : ' > ';
       $trailing_separator = $title = '';
       if (theme_get_setting('sandbox_breadcrumb_title')) {
         $item = menu_get_item();

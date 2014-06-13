@@ -62,6 +62,7 @@
     </ul>
   </nav>
   <?php print $page_top; ?>
+  <?php // echo var_dump($sandbox); ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
 </body>

@@ -77,10 +77,10 @@
 <?php endif; ?>
 
   <!-- ______________________ HEADER _______________________ -->
-  <div class="header-container">
-  <header class="wrapper clearfix site-header">
-      
-    <?php 
+  <header id="siteHeader" class="clearfix site-header container">
+    <div class="inner wrapper">
+
+    <?php
     /*
     * @logo
     */
@@ -90,19 +90,19 @@
       </a>
     <?php endif; ?>
 
-    <?php 
+    <?php
     /*
-    * @structure only show the following HTML if at least one of them is shown 
+    * @structure only show the following HTML if at least one of them is shown
     */
     if ($site_name || $site_slogan): ?>
       <div class="name-slogan">
 
-        <?php 
+        <?php
           /*
           * @Site Name
           */
           if ($site_name): ?>
-            <?php 
+            <?php
             /*
             * @Site Title If there is a Site title, this is no heading.
             *             Then the title will be the h1.
@@ -118,7 +118,7 @@
           <?php endif; ?>
         <?php endif; ?>
 
-        <?php 
+        <?php
           /*
           * @Site Slogan
           */
@@ -129,41 +129,53 @@
       </div>
     <?php endif; ?>
 
-    <!-- ______________________ MAIN NAVIGATION _______________________ -->
-
-    <?php 
+    <?php
       /*
       * @Region Header
       */
       if ($page['header']) { ?>
 
-      <aside id="headerBar" class="sidebar clearfix">
+      <aside id="headerBar" class="sidebar clearfix region">
         <?php print render($page['header']); ?>
       </aside>
-    <?php } else { ?>
-
-      <?php if ($main_menu): ?>
-        <nav id="headerBar" class="sidebar clearfix<?php if (!empty($main_menu)) {print " with-primary";} if (!empty($secondary_menu)) {print " with-secondary";} ?>">
-          <?php print theme('links', array('links' => $main_menu, 'attributes' => array('id' => 'primary', 'class' => array('links', 'clearfix', 'main-menu')))); ?>
-        </nav>
-      <?php endif; ?>
 
     <?php } ?>
-    </header> <!-- /header -->
-  </div>
 
-    <?php // echo var_dump($sandbox_page_elements); ?>
+    </div>
+  </header> <!-- /header -->
 
-  <?php 
+    <!-- ______________________ MAIN NAVIGATION _______________________ -->
 
-  ?>
+    <?php
+      /*
+      * @Region Menu Bar
+      */
+      if ( $page['menu_bar'] ) { ?>
 
-<div id="page" class="<?php print $classes; ?>"<?php print $attributes; ?>>
+      <nav id="menuBar" class="menu-bar container sidebar region clearfix">
+        <div class="inner wrapper">
+          <?php print render($page['menu_bar']); ?>
+        </div>
+      </nav>
+
+      /*
+      * @Theme Menu Bar
+      */
+    <?php } elseif ( $main_menu ) { ?>
+
+      <nav id="menuBar" class="menu-bar container sidebar clearfix<?php if ( !empty($main_menu) ) { print ' with-primary'; } if ( !empty($secondary_menu) ) { print ' with-secondary'; } ?>">
+        <div class="inner wrapper">
+        <?php print theme('links', array('links' => $main_menu, 'attributes' => array('id' => 'primary', 'class' => array('links', 'clearfix', 'main-menu')))); ?>
+        </div>
+      </nav>
+
+    <?php } ?>
+
   <!-- ______________________ HIGHLIGHT _______________________ -->
 
   <?php if ( $page['highlight'] ) { ?>
-  <aside id="highlightBar" class="sidebar clearfix highlights regions">    
-    <div id="highlight-inner" class="inner">
+  <aside id="highlightBar" class="container sidebar clearfix highlights region">
+    <div class="inner wrapper">
       <?php print render($page['highlight']); ?>
     </div>
   </aside>
@@ -171,21 +183,21 @@
 
   <!-- ______________________ MAIN _______________________ -->
 
-  <div class="main-container">
-    <section id="main" class="main clearfix wrapper">
+  <section id="main" class="main clearfix container">
+    <div class="inner wrapper">
 
     <?php if ($page['content_before']) { ?>
-      <aside id="contentBefore">
-        <div id="content-before-inner" class="inner">
+      <aside id="contentBefore" class="wrapper sidebar content-before region container">
+        <div class="inner">
           <?php print render($page['content_before']); ?>
         </div>
       </aside>
-    <?php } else { ?> <!-- /sidebar-first -->
+    <?php } else { ?> <!-- /content-before -->
 
       <?php if ($secondary_menu): ?>
 
-      <aside id="contentBefore">
-        <div id="content-before-inner" class="inner menu">
+      <aside id="contentBefore" class="menu wrapper sidebar content-before container">
+        <div class="inner">
           <?php print theme('links', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary', 'class' => array('links', 'clearfix', 'sub-menu')))); ?>
         </div>
       </aside>
@@ -193,8 +205,8 @@
 
     <?php } ?>
 
-      <article id="content">
-        <div id="content-inner" class="inner column center">
+      <article id="content" class="wrapper container">
+        <div class="inner">
 
         <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>
           <header id="content-header">
@@ -215,11 +227,11 @@
             <?php if ($action_links): ?>
               <ul class="action-links"><?php print render($action_links); ?></ul>
             <?php endif; ?>
-            
+
           </header> <!-- /#content-header -->
         <?php endif; ?>
 
-        <section id="content-area">
+        <section id="content-area" class="content-area region">
           <?php print render($page['content']) ?>
         </section>
 
@@ -229,24 +241,39 @@
     </article> <!-- /content -->
 
     <?php if ($page['content_after']): ?>
-      <aside id="contenAfter">
-        <div id="content-after-inner" class="inner">
+      <aside id="contenAfter" class="sidebar region content-after wrapper container">
+        <div class="inner">
           <?php print render($page['content_after']); ?>
         </div>
       </aside>
     <?php endif; ?> <!-- /content-after -->
-
+    </div>
   </section> <!-- /main -->
-</div>
 
   <!-- ______________________ FOOTER _______________________ -->
 
   <?php if ( $page['footer'] ) : ?>
-    <div class="footer-container">
-      <footer class="region wrapper clearfix site-footer">
+    <footer id="siteFooter" class="region container clearfix site-footer">
+      <div class="inner wrapper">
         <?php print render($page['footer']); ?>
-      </footer> <!-- /footer -->
-    </div>
+      </div>
+    </footer> <!-- /footer -->
   <?php endif; ?>
+
+  <!-- ______________________ DEBUG MODE _______________________ -->
+  <?php if ( isset($sandbox['settings']['debug']) && $sandbox['settings']['debug'] ) {  ?>
+    <div id="debug" class="clearfix debug sidebar container">
+      <div class="inner wrapper">
+       <h2>Debug:</h2>
+       <h3>Sanbox Theme</h3>
+       <code><pre><?php
+          /*
+          * echo debug messages
+          */
+          echo var_dump($sandbox['debug']);
+         ?></pre></code>
+      </div>
+    </div>
+  <?php } ?>
 
 </div> <!-- /page -->
