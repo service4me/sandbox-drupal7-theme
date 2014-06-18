@@ -85,14 +85,29 @@ function sandbox_preprocess_html(&$vars) {
 
   // Adding a class to #main in wireframe mode
   if ($theme['settings']['wireframe_mode']) {
-    $theme['classes_array'][] = 'wireframe-mode';
+    $vars['classes_array'][] = 'wireframe-mode';
   }
+
   // Adding classes wether #navigation is here or not
   if (!empty($vars['main_menu']) or !empty($vars['sub_menu'])) {
-    $theme['classes_array'][] = 'with-navigation';
+    $vars['classes_array'][] = 'with-navigation';
   }
   if (!empty($vars['secondary_menu'])) {
-    $theme['classes_array'][] = 'with-subnav';
+    $vars['classes_array'][] = 'with-subnav';
+  }
+
+  if ( !empty($vars['page']['content_before']) ) {
+    $vars['classes_array'][] = 'with-content-before';
+  }
+  if ( !empty($vars['page']['content_after']) ) {
+    $vars['classes_array'][] = 'with-content-after';
+  }
+  if ( !empty($vars['page']['content_before']) && !empty($vars['page']['content_before']) ) {
+    $vars['classes_array'][] = 'with-content-regions';
+  } elseif ( !empty($vars['page']['content_before']) || !empty($vars['page']['content_before']) ) {
+    $vars['classes_array'][] = 'with-content-region';
+  } else {
+    $vars['classes_array'][] = 'no-content-regions';
   }
 
   // Classes for body element. Allows advanced theming based on context
@@ -107,7 +122,7 @@ function sandbox_preprocess_html(&$vars) {
     if ( $pathArray[0] == 'node' ) {
       if ( $pathArray[1] == 'add' ) {
         $section = 'node-add';
-      } elseif ( is_numeric($pathArray[1]) && ( $pathArray[2] == 'edit' || $pathArray[2] == 'delete' ) ) {
+      } elseif ( isset($pathArray[2]) && is_numeric($pathArray[1]) && ( $pathArray[2] == 'edit' || $pathArray[2] == 'delete' ) ) {
         $section = 'node-' . $pathArray[2];
       }
       // MAGIC BEGINS HERE

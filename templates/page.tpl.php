@@ -183,7 +183,7 @@
 
   <!-- ______________________ MAIN _______________________ -->
 
-  <section id="main" class="main clearfix container">
+  <div id="main" class="articles main clearfix container"<?php print $attributes; ?>>
     <div class="inner wrapper">
 
     <?php if ($page['content_before']) { ?>
@@ -205,7 +205,11 @@
 
     <?php } ?>
 
-      <article id="content" class="wrapper container">
+    <?php if ( $sandbox['page']['type'] != 'single' ) { ?>
+      <section id="content" class="articles wrapper clearfix container">
+    <?php } else { ?>
+      <article id="content" class="wrapper container clearfix">
+    <?php } ?>
         <div class="inner">
 
         <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>
@@ -238,7 +242,11 @@
         <?php print $feed_icons; ?>
 
       </div>
-    </article> <!-- /content -->
+    <?php if ( $sandbox['page']['type'] != 'single' ) { ?>
+      </section>
+    <?php } else { ?>
+      </article>
+    <?php } ?><!-- /content -->
 
     <?php if ($page['content_after']): ?>
       <aside id="contenAfter" class="sidebar region content-after wrapper container">
@@ -248,7 +256,7 @@
       </aside>
     <?php endif; ?> <!-- /content-after -->
     </div>
-  </section> <!-- /main -->
+  </div> <!-- /main -->
 
   <!-- ______________________ FOOTER _______________________ -->
 
