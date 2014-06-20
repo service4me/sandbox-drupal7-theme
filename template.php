@@ -69,8 +69,6 @@ function sandbox_preprocess(&$vars, $hook){
       ),
       'debug' => '',
       'path' => drupal_get_path('theme', 'sandbox'),
-      'classes_array' => array(),
-      'classes' => '',
       'page' => array(
         'elements' => array(),
       )
@@ -83,81 +81,83 @@ function sandbox_preprocess_html(&$vars) {
   $theme = $vars['sandbox'];
   $page = $vars['page'];
 
-  // Adding a class to #main in wireframe mode
-  if ($theme['settings']['wireframe_mode']) {
-    $vars['classes_array'][] = 'wireframe-mode';
-  }
+  if ( $theme['settings']['classes'] ) {
 
-  // Adding classes wether #navigation is here or not
-  if (!empty($vars['main_menu']) or !empty($vars['sub_menu'])) {
-    $vars['classes_array'][] = 'with-navigation';
-  }
-  if (!empty($vars['secondary_menu'])) {
-    $vars['classes_array'][] = 'with-subnav';
-  }
-
-  if ( !empty($vars['page']['content_before']) ) {
-    $vars['classes_array'][] = 'with-content-before';
-  }
-  if ( !empty($vars['page']['content_after']) ) {
-    $vars['classes_array'][] = 'with-content-after';
-  }
-  if ( !empty($vars['page']['content_before']) && !empty($vars['page']['content_before']) ) {
-    $vars['classes_array'][] = 'with-content-regions';
-  } elseif ( !empty($vars['page']['content_before']) || !empty($vars['page']['content_before']) ) {
-    $vars['classes_array'][] = 'with-content-region';
-  } else {
-    $vars['classes_array'][] = 'no-content-regions';
-  }
-
-  // Classes for body element. Allows advanced theming based on context
-  // (home page, node of certain type, etc.)
-  if (!$vars['is_front']) {
-    // Add unique class for each page.
-    $path = drupal_get_path_alias($_GET['q']);
-    // Add unique class for each website section.
-    $pathArray = explode('/', $path);
-    $section = $pathArray[0];
-
-    if ( $pathArray[0] == 'node' ) {
-      if ( $pathArray[1] == 'add' ) {
-        $section = 'node-add';
-      } elseif ( isset($pathArray[2]) && is_numeric($pathArray[1]) && ( $pathArray[2] == 'edit' || $pathArray[2] == 'delete' ) ) {
-        $section = 'node-' . $pathArray[2];
-      }
-      // MAGIC BEGINS HERE
-      $node = node_load($pathArray[1]);
-      $results = field_view_field('node', $node, 'field_tags', array('default'));
-      foreach ($results as $key => $result) {
-        if (is_numeric($key)) {
-          $theme['classes_array'][] = drupal_html_class($result['#title']);
-        }
-      }
-      // MAGIC ENDS HERE
+    // Adding a class to #main in wireframe mode
+    if ($theme['settings']['wireframe_mode']) {
+      $vars['classes_array'][] = 'wireframe-mode';
     }
-    $vars['classes_array'][] = drupal_html_class($section);
-  }
 
-  // Do we have nodes?
-  if ( isset($page['content']['system_main']['nodes']) ) {
-    // All nIds about to be loaded (without the #sorted attribute).
-    $theme['page']['node_ids'] = element_children($vars['page']['content']['system_main']['nodes']);
+    // Adding classes wether #navigation is here or not
+    if (!empty($vars['main_menu']) or !empty($vars['sub_menu'])) {
+      $vars['classes_array'][] = 'with-navigation';
+    }
+    if (!empty($vars['secondary_menu'])) {
+      $vars['classes_array'][] = 'with-subnav';
+    }
 
-    // More then one?
-    if ( count($theme['page']['node_ids']) > 1 ) {
-      $theme['page']['type'] = 'archive';
+    if ( !empty($vars['page']['content_before']) ) {
+      $vars['classes_array'][] = 'with-content-before';
+    }
+    if ( !empty($vars['page']['content_after']) ) {
+      $vars['classes_array'][] = 'with-content-after';
+    }
+    if ( !empty($vars['page']['content_before']) && !empty($vars['page']['content_after']) ) {
+      $vars['classes_array'][] = 'with-content-regions';
+    } elseif ( !empty($vars['page']['content_before']) || !empty($vars['page']['content_after']) ) {
+      $vars['classes_array'][] = 'with-content-region';
     } else {
-      $theme['page']['type'] = 'single';
+      $vars['classes_array'][] = 'no-content-regions';
     }
 
-  } else {
-    // no Nodes means you have a collection of something else
-    $theme['page']['type'] = 'collection';
+    // Classes for body element. Allows advanced theming based on context
+    // (home page, node of certain type, etc.)
+    if (!$vars['is_front']) {
+      // Add unique class for each page.
+      $path = drupal_get_path_alias($_GET['q']);
+      // Add unique class for each website section.
+      $pathArray = explode('/', $path);
+      $section = $pathArray[0];
+
+      if ( $pathArray[0] == 'node' ) {
+        if ( $pathArray[1] == 'add' ) {
+          $section = 'node-add';
+        } elseif ( isset($pathArray[2]) && is_numeric($pathArray[1]) && ( $pathArray[2] == 'edit' || $pathArray[2] == 'delete' ) ) {
+          $section = 'node-' . $pathArray[2];
+        }
+        // MAGIC BEGINS HERE
+        $node = node_load($pathArray[1]);
+        $results = field_view_field('node', $node, 'field_tags', array('default'));
+        foreach ($results as $key => $result) {
+          if (is_numeric($key)) {
+            $theme['classes_array'][] = drupal_html_class($result['#title']);
+          }
+        }
+        // MAGIC ENDS HERE
+      }
+      $vars['classes_array'][] = drupal_html_class($section);
+    }
+
+    // Do we have nodes?
+    if ( isset($page['content']['system_main']['nodes']) ) {
+      // All nIds about to be loaded (without the #sorted attribute).
+      $theme['page']['node_ids'] = element_children($vars['page']['content']['system_main']['nodes']);
+
+      // More then one?
+      if ( count($theme['page']['node_ids']) > 1 ) {
+        $theme['page']['type'] = 'archive';
+      } else {
+        $theme['page']['type'] = 'single';
+      }
+
+    } else {
+      // no Nodes means you have a collection of something else
+      $theme['page']['type'] = 'collection';
+    }
+
+    // shorthand variables
+    $vars['classes_array'][] = $theme['page']['type'];
   }
-
-  // shorthand variables
-  $vars['classes_array'][] = $theme['page']['type'];
-
   // $theme['debug'] = $theme['page']['node_ids'];
   // $theme['debug'] = $vars['page']['content']['system_main']['nodes'];
   // echo var_dump($theme['page']['type']);
@@ -205,7 +205,7 @@ function sandbox_preprocess_page(&$vars, $hook) {
     $vars['sandbox']['page']['elements']['root'] = array(
       'type' => 'section',
       'attributes' => array(
-        'class' => 'articles wrapper container',
+        'class' => 'class="articles wrapper container"',
       ),
     );
 
@@ -257,6 +257,15 @@ function sandbox_preprocess_block(&$vars, $hook) {
   if ($vars['block_id'] == $block_count) {
     $first_last = "last";
     $vars['classes_array'][] = $first_last;
+  }
+
+
+  $is_block_main_menu = ( $vars['elements']['#block']->delta == 'main-menu' );
+
+  if ( $is_block_main_menu ) {
+
+    // $vars['classes_array'][] = 'clearfix';
+
   }
 }
 

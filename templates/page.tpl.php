@@ -139,6 +139,14 @@
         <?php print render($page['header']); ?>
       </aside>
 
+    <?php } elseif ($secondary_menu) { ?>
+
+      <aside id="headerBar" class="menu sidebar header-bar sedondary">
+        <div class="inner">
+          <?php print theme('links', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary', 'class' => array('links', 'clearfix', 'sub-menu')))); ?>
+        </div>
+      </aside>
+
     <?php } ?>
 
     </div>
@@ -152,18 +160,19 @@
       */
       if ( $page['menu_bar'] ) { ?>
 
-      <nav id="menuBar" class="menu-bar container sidebar region clearfix">
+      <section id="menuBar" class="menu-bar container sidebar region clearfix">
         <div class="inner wrapper">
           <?php print render($page['menu_bar']); ?>
         </div>
-      </nav>
+      </section>
 
+    <?php
       /*
       * @Theme Menu Bar
       */
-    <?php } elseif ( $main_menu ) { ?>
+      } elseif ( $main_menu ) { ?>
 
-      <nav id="menuBar" class="menu-bar container sidebar clearfix<?php if ( !empty($main_menu) ) { print ' with-primary'; } if ( !empty($secondary_menu) ) { print ' with-secondary'; } ?>">
+      <nav id="menuBar" class="menu-bar container sidebar clearfix">
         <div class="inner wrapper">
         <?php print theme('links', array('links' => $main_menu, 'attributes' => array('id' => 'primary', 'class' => array('links', 'clearfix', 'main-menu')))); ?>
         </div>
@@ -192,24 +201,23 @@
           <?php print render($page['content_before']); ?>
         </div>
       </aside>
-    <?php } else { ?> <!-- /content-before -->
+    <?php } ?> <!-- /content-before -->
 
-      <?php if ($secondary_menu): ?>
+    <?php
+      /*
+      * @Regions Content
+      * wrap different container based on page type
+      */
+      if ( $sandbox['page']['type'] != 'single' ) { ?>
 
-      <aside id="contentBefore" class="menu wrapper sidebar content-before container">
-        <div class="inner">
-          <?php print theme('links', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary', 'class' => array('links', 'clearfix', 'sub-menu')))); ?>
-        </div>
-      </aside>
-      <?php endif; ?>
-
-    <?php } ?>
-
-    <?php if ( $sandbox['page']['type'] != 'single' ) { ?>
       <section id="content" class="articles wrapper clearfix container">
+
     <?php } else { ?>
+
       <article id="content" class="wrapper container clearfix">
+
     <?php } ?>
+
         <div class="inner">
 
         <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>

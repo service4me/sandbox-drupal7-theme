@@ -176,6 +176,13 @@ abbr {
   margin:0;
   padding:0;
 }
+tbody{
+  border-color:transparent;
+}
+tr.even,
+tr.odd{
+  background:none;
+}
 
 /* clear classes
  * -------------
