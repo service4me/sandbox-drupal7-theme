@@ -135,16 +135,17 @@
       */
       if ($page['header']) { ?>
 
-      <aside id="headerBar" class="sidebar clearfix region">
-        <?php print render($page['header']); ?>
+      <aside id="headerBar" class="sidebar region header-bar">
+        <div class="inner clearfix">
+          <?php print render($page['header']); ?>
+        </div>
       </aside>
 
     <?php } elseif ($secondary_menu) { ?>
 
       <aside id="headerBar" class="menu sidebar header-bar sedondary">
-        <div class="inner">
+        <div class="inner clearfix">
           <?php print theme('links', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary', 'class' => array('links', 'clearfix', 'sub-menu')))); ?>
-        </div>
       </aside>
 
     <?php } ?>
@@ -160,8 +161,8 @@
       */
       if ( $page['menu_bar'] ) { ?>
 
-      <section id="menuBar" class="menu-bar container sidebar region clearfix">
-        <div class="inner wrapper">
+      <section id="menuBar" class="menu-bar container sidebar region">
+        <div class="inner wrapper clearfix">
           <?php print render($page['menu_bar']); ?>
         </div>
       </section>
@@ -275,21 +276,5 @@
       </div>
     </footer> <!-- /footer -->
   <?php endif; ?>
-
-  <!-- ______________________ DEBUG MODE _______________________ -->
-  <?php if ( isset($sandbox['settings']['debug']) && $sandbox['settings']['debug'] ) {  ?>
-    <div id="debug" class="clearfix debug sidebar container">
-      <div class="inner wrapper">
-       <h2>Debug:</h2>
-       <h3>Sanbox Theme</h3>
-       <code><pre><?php
-          /*
-          * echo debug messages
-          */
-          echo var_dump($sandbox['debug']);
-         ?></pre></code>
-      </div>
-    </div>
-  <?php } ?>
 
 </div> <!-- /page -->

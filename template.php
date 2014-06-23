@@ -135,7 +135,9 @@ function sandbox_preprocess_html(&$vars) {
         }
         // MAGIC ENDS HERE
       }
-      $vars['classes_array'][] = drupal_html_class($section);
+
+      drupal_set_message($section, 'status', false);
+      $vars['classes_array'][] = drupal_html_class('section-' . $section);
     }
 
     // Do we have nodes?

@@ -253,6 +253,12 @@ tr.odd{
 div.view div.views-admin-links {
   width: auto;
 }
+#overlay-container,
+.overlay-modal-background,
+.overlay-element {
+  padding-top:5%;
+  height:95%;
+}
 
 /* Rollover edit links for blocks. */
 div.block {

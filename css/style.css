@@ -31,6 +31,8 @@ a:hover, a:active {
 .name-slogan{
   float:left;
   margin:0 1em 0 0;
+  position: relative;
+  z-index: 60;
 }
 /* take h1 default style for sitename even if its h2 */
 #site-name {
@@ -41,7 +43,7 @@ a:hover, a:active {
 
 }
 
-h1, h2, h3, h4, h5, h6, bold, strong, a:link, a:visited {
+h1, h2, h3, h4, h5, h6, th, bold, strong, a:link, a:visited {
   font-family:'open_sanssemibold';
   font-weight:normal;
 }
@@ -85,13 +87,16 @@ abbr {}
 .menu-bar{
 }
 .menu-bar > .inner{
-}
-.menu-bar .block-menu,
-.menu-bar .main-menu{
   -webkit-box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
   box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
   background:#FCC242;
+}
+.menu-bar nav{
   z-index:60;
+  float:left;
+}
+.menu-bar #block-system-user-menu{
+  float:right;
 }
 .menu-bar .block-menu li,
 .menu-bar .main-menu li{
@@ -383,4 +388,95 @@ nav a:visited{
 .header-bar .sub-menu a{
   padding:0 1.5em;
   white-space:nowrap;
+}
+
+/**
+ * drupal calender block
+ */
+
+#main table th,
+#main table td{
+  padding:0.5em 2% 0.5em 0;
+  border:none;
+}
+#main .calendar-calendar td{
+  background:none;
+  color:#000000;
+  border:1px solid #000000;
+  border-width:0 1px 1px 1px;
+}
+#main .calendar-calendar td + td{
+  border-left:none;
+}
+#main .calendar-calendar table.mini{
+  text-align:center;
+  margin:0 0 2em 0;
+}
+#main .calendar-calendar tr td.today,
+#main .calendar-calendar tr.odd td.today,
+#main .calendar-calendar tr.even td.today{
+  background:#FFFFFF;
+  color:#000000;
+}
+#main .calendar-calendar table.mini td.has-events{
+  background:#FCC242;
+}
+#main .calendar-calendar tr{
+  background:none;
+}
+
+#main .calendar-empty{
+}
+#main .calendar-calendar table.mini td.empty,
+#main td.empty .calendar-empty{
+background:none;
+}
+#main .date-nav .pager{
+  position:absolute;
+  width:100%;
+  top:-0.4em;
+}
+.page-kalender #main .date-nav .pager{
+}
+#main .date-nav .pager li{
+  margin:0;
+  background:#FFFFFF;
+  border:none;
+  text-align:center;
+}
+#main .date-nav .pager a{
+  font-size:3em;
+  line-height:0.6;
+  display:inline-block;
+  padding-top:1px;
+}
+.page-kalender #main .date-nav .pager a{
+  font-size:1em;
+}
+#main .view .date-nav{
+  padding:0;
+}
+.page-kalender #main .date-prev{ left:0; text-align:left; }
+.page-kalender #main .date-next{ right:0; text-align:left; }
+
+#main .calendar-calendar th.days{
+  background:#FCC242;
+  color:#000000;
+  border:1px solid #000000;
+  border-width:1px 1px 1px 1px;
+}
+#main .calendar-calendar th.days + th.days{
+  border-left:none;
+}
+.page-kalender #main .date-heading{
+  padding-top:30px;
+}
+.page-kalender #main .year-view div.month-view div.date-nav{
+  background:#FCC242;
+}
+.page-kalender #main .calendar-calendar tr{
+  background:none;
+}
+#page #block-views-menu_auswahl-block{
+  margin:0 0 3em 0;
 }
