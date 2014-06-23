@@ -33,6 +33,14 @@ works unstable and is under heavy changes - but works for now
 #### @Region footerBar
   **ToDo**: All
 
-Options:
+### Options:
+Ready implemented:
+- primary_menu
+- secondary_menu
+- wireframe_mode
+Planned:
+- Color Selection
+- Layout options
+- TBC
 
   
