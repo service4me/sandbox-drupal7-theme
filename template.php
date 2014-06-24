@@ -324,6 +324,53 @@ function sandbox_breadcrumb($variables) {
 }
 
 /**
+ * Alter the theme registry information returned from hook_theme().
+ *
+ * @param $theme_registry
+ *   The entire cache of theme registry information, post-processing.
+ *
+ * @see
+ *   Added this due to a fault with the current Drupal 7 implementation of template_preprocess_menu_tree()
+ *   http://drupal.org/node/767404
+ *
+ */
+function sandbox_theme_registry_alter(&$theme_registry) {
+  foreach ($theme_registry['menu_tree']['preprocess functions'] as $key => $value) {
+    if ($value == 'template_preprocess_menu_tree') {
+      unset($theme_registry['menu_tree']['preprocess functions'][$key]);
+    }
+  }
+}
+// PULL THE FIRST MENU ITEM AND GET THE MENU NAME FROM IT
+/**
+ * Preprocesses the rendered tree for theme_menu_tree().
+ * http://drupal.org/node/767404
+ */
+function sandbox_preprocess_menu_tree(&$variables) {
+  // echo var_dump($variables['tree']);
+  $pop = array_slice($variables['tree'], 0, 1);
+  $menu_item = array_pop($pop);
+  $variables['menu'] = $menu_item['#original_link'];
+  $variables['tree']      = $variables['tree']['#children'];
+}
+// PRINT THE MENU NAME WE PASSED ON
+/**
+ * IMPLEMENTATION OF: theme_menu_tree()
+ *
+ * Returns HTML for a wrapper for a menu sub-tree.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - tree: An HTML string containing the tree's items.
+ *
+ * @see     template_preprocess_menu_tree()
+ * @ingroup themeable
+ */
+function sandbox_menu_tree($variables) {
+  return '<ul class="menu' . (($variables['menu']['menu_name']) ? ' ' . $variables['menu']['menu_name'] : '') . '">' . $variables['tree'] . '</ul>';
+}
+
+/**
  * Converts a string to a suitable html ID attribute.
  *
  * http://www.w3.org/TR/html4/struct/global.html#h-7.5.2 specifies what makes a
@@ -347,6 +394,7 @@ function sandbox_id_safe($string) {
   }
   return $string;
 }
+
 
 /**
  * Generate the HTML output for a menu link and submenu.

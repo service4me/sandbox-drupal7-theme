@@ -84,7 +84,7 @@
     /*
     * @logo
     */
-    if ($logo): ?>
+    if ( $logo ) : ?>
       <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
         <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
       </a>
@@ -101,28 +101,16 @@
           /*
           * @Site Name
           */
-          if ($site_name): ?>
-            <?php
-            /*
-            * @Site Title If there is a Site title, this is no heading.
-            *             Then the title will be the h1.
-            */
-            if ($title): ?>
-            <h2 id="site-name" class="title">
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a>
-            </h2>
-          <?php else: /* Use h1 when the content title is empty */ ?>
-            <h1 id="site-name" class="title">
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a>
-            </h1>
-          <?php endif; ?>
-        <?php endif; ?>
+        ?>
+        <<?php if ( $is_front ) { echo 'h1'; } else { echo 'h2'; } ?> id="site-name" class="title">
+          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a>
+        </<?php if ( $is_front ) { echo 'h1'; } else { echo 'h2'; } ?>>
 
         <?php
           /*
           * @Site Slogan
           */
-          if ($site_slogan): ?>
+          if ($site_slogan) : ?>
           <div id="site-slogan"><?php print $site_slogan; ?></div>
         <?php endif; ?>
 
@@ -143,7 +131,7 @@
 
     <?php } elseif ($secondary_menu) { ?>
 
-      <aside id="headerBar" class="menu sidebar header-bar sedondary">
+      <aside id="headerBar" class="menu sidebar header-bar secondary">
         <div class="inner clearfix">
           <?php print theme('links', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary', 'class' => array('links', 'clearfix', 'sub-menu')))); ?>
       </aside>
@@ -181,9 +169,8 @@
 
     <?php } ?>
 
-  <!-- ______________________ HIGHLIGHT _______________________ -->
-
   <?php if ( $page['highlight'] ) { ?>
+  <!-- ______________________ HIGHLIGHT _______________________ -->
   <aside id="highlightBar" class="container sidebar clearfix highlights region">
     <div class="inner wrapper">
       <?php print render($page['highlight']); ?>
