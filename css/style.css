@@ -99,26 +99,26 @@ abbr {}
   float:right;
 }
 .menu-bar .block-menu li,
-.menu-bar .main-menu li{
+.menu-bar .main-menu li,
+.menu-bar .menu li{
   float:left;
+  position:relative;
 }
 .menu-bar .block-menu li + li,
-.menu-bar .main-menu li + li{
+.menu-bar .main-menu li + li,
+.menu-bar .menu li + li{
 }
 .menu-bar .block-menu a,
-.menu-bar .main-menu a{
+.menu-bar .main-menu a,
+.menu-bar .menu a{
   font-size:1.4em;
   padding:0 1em;
   line-height:3em;
   color:#FFFFFF;
 }
-
-.menu-bar .block-menu li,
-.menu-bar .main-menu li{
-  position:relative;
-}
 .menu-bar .block-menu ul ul,
-.menu-bar .main-menu ul ul{
+.menu-bar .main-menu ul ul,
+.menu-bar .menu ul ul{
   position:absolute;
   top:4em;
   left:-9999em;
@@ -128,11 +128,13 @@ abbr {}
   background:#FCC242;
 }
 .menu-bar .block-menu ul ul a,
-.menu-bar .main-menu ul ul a{
+.menu-bar .main-menu ul ul a,
+.menu-bar .menu ul ul {
   white-space:nowrap;
 }
 .menu-bar .block-menu li:hover > ul,
-.menu-bar .main-menu li:hover > ul{
+.menu-bar .main-menu li:hover > ul,
+.menu-bar .menu li:hover > ul{
   left:auto;
 }
 
