@@ -34,11 +34,12 @@ works unstable and is under heavy changes - but works for now
   **ToDo**: All
 
 ### Options:
-Ready implemented:
+#### Ready implemented:
 - primary_menu
 - secondary_menu
 - wireframe_mode
-Planned:
+
+#### Planned:
 - Color Selection
 - Layout options
 - TBC
