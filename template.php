@@ -124,16 +124,17 @@ function sandbox_preprocess_html(&$vars) {
           $section = 'node-add';
         } elseif ( isset($pathArray[2]) && is_numeric($pathArray[1]) && ( $pathArray[2] == 'edit' || $pathArray[2] == 'delete' ) ) {
           $section = 'node-' . $pathArray[2];
-        }
-        // MAGIC BEGINS HERE
-        $node = node_load($pathArray[1]);
-        $results = field_view_field('node', $node, 'field_tags', array('default'));
-        foreach ($results as $key => $result) {
-          if (is_numeric($key)) {
-            $theme['classes_array'][] = drupal_html_class($result['#title']);
+        } else {
+          // MAGIC BEGINS HERE
+          $node = node_load($pathArray[1]);
+          $results = field_view_field('node', $node, 'field_tags', array('default'));
+          foreach ($results as $key => $result) {
+            if (is_numeric($key)) {
+              $theme['classes_array'][] = drupal_html_class($result['#title']);
+            }
           }
+          // MAGIC ENDS HERE
         }
-        // MAGIC ENDS HERE
       }
 
       drupal_set_message($section, 'status', false);
