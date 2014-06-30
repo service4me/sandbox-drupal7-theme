@@ -223,6 +223,14 @@ function sandbox_preprocess_page(&$vars, $hook) {
   $vars['sandbox_page'] = $theme['page'];
   $vars['sandbox_page_elements'] = $theme['page']['elements'];
 
+  if ( $vars['main_menu'] ) {
+    $pid = variable_get('menu_main_links_source', 'main-menu');
+    $tree = menu_tree($pid);
+    $vars['main_menu'] = drupal_render($tree);
+  } else {
+    $vars['main_menu'] = FALSE;
+  }
+
   // $theme['debug'] = $theme['page']['node_ids'];
   // set the new theme variable
   $vars['sandbox'] = $theme;
@@ -413,7 +421,7 @@ function sandbox_menu_link(array $variables){
 
   global $user;
   $element = $variables['element'];
-  $sub_menu = '';
+  $sub_menu = false;
 
   if ( $element['#below'] ) {
 

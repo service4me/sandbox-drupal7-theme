@@ -117,7 +117,7 @@ abbr {}
   color:#FFFFFF;
 }
 .menu-bar .block-menu ul ul,
-.menu-bar .main-menu ul ul,
+.menu-bar .main-menu ul,
 .menu-bar .menu ul ul{
   position:absolute;
   top:4em;
@@ -128,8 +128,8 @@ abbr {}
   background:#FCC242;
 }
 .menu-bar .block-menu ul ul a,
-.menu-bar .main-menu ul ul a,
-.menu-bar .menu ul ul {
+.menu-bar .main-menu ul a,
+.menu-bar .menu ul ul a{
   white-space:nowrap;
 }
 .menu-bar .block-menu li:hover > ul,
@@ -142,6 +142,7 @@ abbr {}
   display:block;
   margin:0;
 }
+.main
 nav a{
 }
 nav a:link,
@@ -271,26 +272,35 @@ nav a:visited{
   margin:0;
 }
 .main aside li{
-  padding:0.2em 0 0.3em;
+  padding:0;
   margin:0;
   list-style:none;
   font-size:1.2em;
 }
 .main aside li + li{
-  border-top:1px solid #784421;
+  border-top:1px solid #242424;
 }
-.main > aside li{
+.main aside li{
   padding-left:0;
   padding-right:0;
 }
-.main > aside li + li{
-  border-color:#FBC53F;
+.main aside a{
+  padding:0.5em 0;
 }
 .main aside a:link,
 .main aside a:visited{
   font-family:'open_sansregular', sans-serif;
 }
-
+.main aside li li{
+  font-size:1em;
+}
+.main aside .expanded > ul{
+  padding-left:1em;
+  padding-bottom:1em;
+}
+.main aside li li{
+  border-color:#656565;
+}
 /* user menu */
 #page_top-region{
   background:#464646;
@@ -366,11 +376,13 @@ nav a:visited{
   list-style:none;
 }
 .sidebar .menu > li{
-  padding:0.2em 0 0.3em;
   margin:0;
 }
 .sidebar .menu a{
   display:block;
+}
+.sidebar .calendar{
+  width:auto;
 }
 .header-bar .menu,
 .header-bar .sub-menu{
@@ -451,6 +463,7 @@ background:none;
   line-height:0.6;
   display:inline-block;
   padding-top:1px;
+  padding-bottom:0;
 }
 .page-kalender #main .date-nav .pager a{
   font-size:1em;

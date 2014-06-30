@@ -161,9 +161,9 @@
       */
       } elseif ( $main_menu ) { ?>
 
-      <nav id="menuBar" class="menu-bar container sidebar clearfix">
-        <div class="inner wrapper">
-        <?php print theme('links', array('links' => $main_menu, 'attributes' => array('id' => 'primary', 'class' => array('links', 'clearfix', 'main-menu')))); ?>
+      <nav id="menuBar" class="menu-bar container sidebar">
+        <div class="inner wrapper clearfix">
+        <?php print $main_menu; ?>
         </div>
       </nav>
 
