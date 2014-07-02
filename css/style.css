@@ -43,7 +43,7 @@ a:hover, a:active {
 
 }
 
-h1, h2, h3, h4, h5, h6, th, bold, strong, a:link, a:visited {
+h1, h2, h3, h4, h5, h6, th, bold, strong, a:link, a:visited, button, input[type="submit"] {
   font-family:'open_sanssemibold';
   font-weight:normal;
 }
@@ -95,6 +95,7 @@ abbr {}
   z-index:60;
   float:left;
 }
+.menu-bar #block-search-form,
 .menu-bar #block-system-user-menu{
   float:right;
 }
@@ -103,6 +104,9 @@ abbr {}
 .menu-bar .menu li{
   float:left;
   position:relative;
+}
+.menu-bar #block-search-form div{
+  float:left;
 }
 .menu-bar .block-menu li + li,
 .menu-bar .main-menu li + li,
@@ -136,6 +140,10 @@ abbr {}
 .menu-bar .main-menu li:hover > ul,
 .menu-bar .menu li:hover > ul{
   left:auto;
+}
+
+.menu-bar #block-search-form input{
+margin-top:0.5em;
 }
 
 .main nav li{
@@ -223,10 +231,12 @@ nav a:visited{
 .articles article .title{
   font-size:2em;
 }
-.content{
+.content,
+#block-system-main{
   font-size:1.6em;
 }
-.content .content{
+.content .content,
+#block-system-main .content{
   font-size:1em;
 }
 .main aside{
@@ -300,45 +310,6 @@ nav a:visited{
 }
 .main aside li li{
   border-color:#656565;
-}
-/* user menu */
-#page_top-region{
-  background:#464646;
-  color:#CCCCCC;
-}
-#page_top-region .menu,
-#page_top-region .sub-menu{
-  list-style:none;
-}
-#page_top-region .menu li,
-#page_top-region .sub-menu li{
-  list-style:none;
-  float:left;
-  padding:0.3em;
-}
-#page_top-region .menu a,
-#page_top-region .sub-menu a{
-  display:block;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  padding:0.1em 0.5em;
-}
-#page_top-region .menu a:link,
-#page_top-region .menu a:visited,
-#page_top-region .sub-menu a:link,
-#page_top-region .sub-menu a:visited{
-  color:#CCCCCC;
-  font-size:1.3em;
-}
-#page_top-region .menu a:hover,
-#page_top-region .menu a:focus,
-#page_top-region .sub-menu a:hover,
-#page_top-region .sub-menu a:focus{
-  color:#FFFFFF;
-  text-decoration:none;
-  background-color:#666666;
-  -webkit-box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 .region-navbar #block-menu-menu-user-tasks{
   float:left;
