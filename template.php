@@ -17,6 +17,31 @@ if (theme_get_setting('sandbox_tabs')) {
   drupal_add_css( drupal_get_path('theme', 'sandbox') .'/css/tabs.css');
 }
 
+function sandbox_css_alter(&$css) {
+  $exclude = array(
+    'modules/aggregator/aggregator.css' => FALSE,
+    'modules/block/block.css' => FALSE,
+    'modules/book/book.css' => FALSE,
+    'modules/file/file.css' => FALSE,
+    'modules/filter/filter.css' => FALSE,
+    'modules/forum/forum.css' => FALSE,
+    'modules/help/help.css' => FALSE,
+    'modules/menu/menu.css' => FALSE,
+    'modules/node/node.css' => FALSE,
+    'modules/poll/poll.css' => FALSE,
+    'modules/profile/profile.css' => FALSE,
+    'modules/search/search.css' => FALSE,
+    'modules/system/system.css' => FALSE,
+    'modules/system/system.menus.css' => FALSE,
+    'modules/system/system.messages.css' => FALSE,
+    'modules/system/system.theme.css' => FALSE,
+    'modules/taxonomy/taxonomy.css' => FALSE,
+    'modules/tracker/tracker.css' => FALSE,
+    'modules/user/user.css' => FALSE,
+  );
+  $css = array_diff_key($css, $exclude);
+}
+
 function sandbox_js_alter(&$javascript){
 
   $base_path = base_path();
@@ -137,7 +162,7 @@ function sandbox_preprocess_html(&$vars) {
         }
       }
 
-      drupal_set_message($section, 'status', false);
+      //drupal_set_message($section, 'status', false);
       $vars['classes_array'][] = drupal_html_class('section-' . $section);
     }
 

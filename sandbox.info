@@ -4,8 +4,6 @@ screenshot = images/screenshot.gif
 core = "7.x"
 engine = phptemplate
 
-regions[page_top] = Page top
-regions[page_first] = Page first
 regions[header] = Header
 regions[menu_bar] = Menu Bar
 regions[highlight] = Highlight

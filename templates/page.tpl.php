@@ -70,11 +70,6 @@
  * @see html.tpl.php
  */
 ?>
-<?php if ($page['page_first']): ?>
-  <div id="page_top" class="clearfix region">
-    <?php print render($page['page_first']); ?>
-  </div>
-<?php endif; ?>
 
   <!-- ______________________ HEADER _______________________ -->
   <header id="siteHeader" class="clearfix site-header container">
