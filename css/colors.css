@@ -1,0 +1,40 @@
+body{
+  background:#ffffff;
+  color:#222222;
+}
+a:link,
+a:visited{
+  color:#242424;
+}
+.name-slogan,
+.name-slogan a,
+.main .title,
+.main .title a {
+  color:#232323;
+}
+.menu-bar > .inner,
+.menu-bar .block-menu ul ul,
+.menu-bar .main-menu ul,
+.menu-bar .menu ul ul{
+  background:#fcc242;
+  color:#fefefe;
+}
+.menu-bar a:link,
+.menu-bar a:visited{
+  color:#fefefe;
+}
+.header-bar .menu,
+.header-bar .sub-menu,
+.main aside .block,
+.main aside .widget{
+  background:#ffe755;
+  color:#333333;
+}
+.header-bar a,
+.main aside a{
+  color:#333333;
+}
+.main aside li + li{
+  border-top:1px solid;
+  border-color:#656565;
+}

@@ -221,7 +221,12 @@ text-align:center;
 padding-left:1em;
 padding-right:1em;
 text-indent:0;
-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.2);
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+-webkit-box-shadow: -1px 1px 2px #666666;
+-moz-box-shadow: 0 1px 3px #888888;
+box-shadow: 0 1px 3px #888888;
 border:1px solid #FFFFFF;
 line-height:1em;
 }
@@ -276,6 +281,30 @@ tr.odd{
 .floatright, .fright, .floatr {
   float: right;
   margin: 0 0 5px 10px;
+}
+/**
+ * form-item clearfix. Drupal sucks
+ * ================================
+ */
+#block-system-main .form-item:before,
+#block-system-main .form-item:after {
+    content: " ";
+    display: table;
+}
+#block-system-main .form-item:after {
+    clear: both;
+}
+#block-system-main .form-item:before,
+#block-system-main .form-item:after {
+    content: " ";
+    display: table;
+}
+#block-system-main .form-item:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
 }
 
 /* "Skip to Main Content" link
@@ -400,7 +429,113 @@ div.block:hover .edit {
   height: 50px;
 }
 /* UI improvments. */
+.section-admin #block-system-main table,
+.section-edit #block-system-main table{
+border:1px solid #EFEFEF;
+border-width:1px 0 0 1px;
+}
+.section-admin #block-system-main td,
+.section-edit #block-system-main td{
+border:1px solid #EFEFEF;
+border-width:0 1px 1px 0;
+}
+.section-admin #block-system-main th,
+.section-edit #block-system-main th,
+.section-admin #block-system-main tr.region-title td,
+.section-edit #block-system-main tr.region-title td{
+border:1px solid #FFFFFF;
+border-width:0 1px 1px 0;
+background:#DFDFDF;
+text-align:left;
+}
+.section-admin #block-system-main .module,
+.section-edit #block-system-main .module,
+.section-admin #block-system-main label,
+.section-edit #block-system-main label,
+.section-admin #block-system-main tr.region-title td,
+.section-edit #block-system-main tr.region-title td{
+  font-weight:bold;
+}
+
+.section-admin #block-system-main fieldset,
+.section-edit #block-system-main fieldset{
+  position:relative;
+  padding:1.5em 0.5em 0.5em 0.5em;
+  margin:1.5em 0 1em 0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border:1px solid #EFEFEF;
+}
+.section-admin #block-system-main legend,
+.section-edit #block-system-main legend{
+  background:#EFEFEF;
+  color:#252525;
+  position:absolute;
+  top:-0.9em;
+  left:0.5em;
+  padding:0.2em 0.5em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: -1px 1px 2px #666666;
+  -moz-box-shadow: 0 1px 3px #888888;
+  box-shadow: 0 1px 3px #888888;
+}
+.section-admin #block-system-main .odd,
+.section-edit #block-system-main .odd{
+  background:#EFEFEF;
+}
+.section-admin #block-system-main .odd *,
+.section-edit #block-system-main .odd *{
+  border-color:#FFFFFF;
+}
+.section-admin #block-system-main .form-item,
+.section-edit #block-system-main .form-item{
+  height:auto;
+  padding:0.5em 0 0 0.5em;
+}
+.section-admin #block-system-main table .form-item,
+.section-edit #block-system-main table .form-item{
+  padding-top:0;
+}
+.section-admin #block-system-main .checkbox .form-item,
+.section-edit #block-system-main .checkbox .form-item{
+  text-align:center;
+  min-width:4em;
+  padding-left:0;
+}
+.section-admin #block-system-main .checkbox .form-item input,
+.section-edit #block-system-main .checkbox .form-item input{
+  margin:0;
+}
+.exposed-filters .filters{
+width:27em;
+}
+#palette .lock{
+  left:0;
+  top:0;
+}
+#color_scheme_form #palette .form-item,
+#color_scheme_form .form-item{
+  width:27em;
+}
+.section-admin #block-system-main label,
+.section-edit #block-system-main label{
+  padding:0.5em 0;
+  margin:0 0.5em 0.5em 0;
+  display:inline-block;
+  line-height:normal;
+}
+.section-admin #block-system-main .form-type-select select,
+.section-edit #block-system-main .form-type-select  select{
+  float:right;
+  clear:right;
+}
 #edit-title {
+  margin-left:0;
+  margin-right:0;
+  width:100%;
 }
 #system-themes-form img {
   width: 100px;
@@ -410,10 +545,15 @@ div.block:hover .edit {
   line-height: 1.2em;
   font-size: 0.8em;
   margin-top: 5px;
-  color: #777777;
 }
 #edit-delete {
   color: #cc0000;
+}
+.module-link{
+  display:block;
+  height:1.1428em;
+  width:1.1428em;
+  text-indent:-9999em;
 }
 
 /* Console, style from slate theme. */

@@ -192,6 +192,26 @@ function sandbox_preprocess_html(&$vars) {
   $vars['sandbox'] = $theme;
 }
 
+/**
+ * Override or insert variables into the page template for HTML output.
+ */
+function sandbox_process_html(&$variables) {
+  // Hook into color.module.
+  if (module_exists('color')) {
+    _color_html_alter($variables);
+  }
+}
+
+/**
+ * Override or insert variables into the page template.
+ */
+function sandbox_process_page(&$variables) {
+  // Hook into color.module.
+  if (module_exists('color')) {
+    _color_page_alter($variables);
+  }
+}
+
 function sandbox_preprocess_page(&$vars, $hook) {
 
   // get the theme variable
