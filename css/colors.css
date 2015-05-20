@@ -1,0 +1,23 @@
+.name-slogan {
+  color:#222222;
+}
+.menu-bar > .inner,
+.menu-bar .block-menu ul ul,
+.menu-bar .main-menu ul,
+.menu-bar .menu ul ul{
+  background:#FCC242;
+  color:#FFFFFF;
+}
+.menu-bar a{
+  color:#FFFFFF;
+}
+.header-bar .menu,
+.header-bar .sub-menu,
+.main aside .block,
+.main aside .widget{
+  background:#FFE755;
+  color:#333333;
+}
+.header-bar a{
+  color:#333333;
+}

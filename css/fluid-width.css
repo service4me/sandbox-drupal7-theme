@@ -1,0 +1,9 @@
+/**
+ * fluid layout, set your value as %
+ * =================================
+ */
+@media screen and ( min-width: 987px ) {
+  body > .container > .wrapper{
+    width:90%;
+  }
+}

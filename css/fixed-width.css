@@ -1,0 +1,12 @@
+/* fixed layout, set your value * 10
+width:98.7em;
+*/
+
+/**
+ * desktop default layout
+ */
+@media screen and ( min-width: 987px ) {
+  body > .container > .wrapper{
+    width:98.7em;
+  }
+}
