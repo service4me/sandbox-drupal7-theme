@@ -608,6 +608,7 @@ div.block:hover .edit {
   height: 50px;
 }
 /* UI improvments. */
+<<<<<<< HEAD
 div.admin{
 }
 div.admin-panel{
@@ -655,6 +656,17 @@ color:#8C2E0B;
 .section-admin #block-system-main td:last-child,
 .section-edit #block-system-main td:last-child{
 border-right:1px solid #EFEFEF;
+=======
+.section-admin #block-system-main table,
+.section-edit #block-system-main table{
+border:1px solid #EFEFEF;
+border-width:1px 0 0 1px;
+}
+.section-admin #block-system-main td,
+.section-edit #block-system-main td{
+border:1px solid #EFEFEF;
+border-width:0 1px 1px 0;
+>>>>>>> 573e03075cce144c6236929bf4c1e35a80cafb09
 }
 .section-admin #block-system-main th,
 .section-edit #block-system-main th,
@@ -687,6 +699,10 @@ text-align:left;
 .section-admin #block-system-main legend,
 .section-edit #block-system-main legend{
   background:#EFEFEF;
+<<<<<<< HEAD
+=======
+  color:#252525;
+>>>>>>> 573e03075cce144c6236929bf4c1e35a80cafb09
   position:absolute;
   top:-0.9em;
   left:0.5em;
@@ -725,6 +741,7 @@ text-align:left;
 .section-edit #block-system-main .checkbox .form-item input{
   margin:0;
 }
+<<<<<<< HEAD
 .admin-list:before,
 .admin-list:after{
   content: " ";
@@ -762,6 +779,8 @@ padding:1em 1em 0 1em;
   border-top:1px solid #CCCCCC;
   padding-top:1em;
 }
+=======
+>>>>>>> 573e03075cce144c6236929bf4c1e35a80cafb09
 .exposed-filters .filters{
 width:27em;
 }
@@ -798,7 +817,6 @@ width:27em;
   line-height: 1.2em;
   font-size: 0.8em;
   margin-top: 5px;
-  color: #777777;
 }
 #edit-delete {
   color: #cc0000;

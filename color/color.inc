@@ -13,21 +13,23 @@ $info = array(
     'first_color_background' => t('First background color'),
     'first_color_text' => t('First text color'),
     'second_color_background' => t('Second background color'),
-    'second_color_text' => t('Second text color')
+    'second_color_text' => t('Second text color'),
+    'second_color_border' => t('Second border color')
   ),
   // Pre-defined color schemes.
   'schemes' => array(
     'default' => array(
       'title' => t('Sandbox (default)'),
       'colors' => array(
-        'bg' => '#FFFFFF',
-        'titleslogan' => '#222222',
+        'bg' => '#ffffff',
+        'titleslogan' => '#232323',
         'text' => '#222222',
-        'link' => '#222222',
-        'first_color_background' => '#FCC242',
-        'first_color_text' => '#FFFFFF',
-        'second_color_background' => '#FFE755',
-        'second_color_text' =>'#333333'
+        'link' => '#242424',
+        'first_color_background' => '#fcc242',
+        'first_color_text' => '#fefefe',
+        'second_color_background' => '#ffe755',
+        'second_color_text' =>'#333333',
+        'second_color_border' => '#656565'
       )
     )
   ),
@@ -72,3 +74,4 @@ $info = array(
   // Base file for image generation.
   'base_image' => 'color/base.png',
 );
+

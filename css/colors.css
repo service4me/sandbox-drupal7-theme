@@ -1,23 +1,63 @@
+<<<<<<< HEAD
 .name-slogan {
   color:#222222;
 }
+=======
+body{
+  background:#ffffff;
+  color:#222222;
+}
+a:link,
+a:visited{
+  color:#242424;
+}
+.name-slogan,
+.name-slogan a,
+.main .title,
+.main .title a {
+  color:#232323;
+}
+>>>>>>> 573e03075cce144c6236929bf4c1e35a80cafb09
 .menu-bar > .inner,
 .menu-bar .block-menu ul ul,
 .menu-bar .main-menu ul,
 .menu-bar .menu ul ul{
+<<<<<<< HEAD
   background:#FCC242;
   color:#FFFFFF;
 }
 .menu-bar a{
   color:#FFFFFF;
+=======
+  background:#fcc242;
+  color:#fefefe;
+}
+.menu-bar a:link,
+.menu-bar a:visited{
+  color:#fefefe;
+>>>>>>> 573e03075cce144c6236929bf4c1e35a80cafb09
 }
 .header-bar .menu,
 .header-bar .sub-menu,
 .main aside .block,
 .main aside .widget{
+<<<<<<< HEAD
   background:#FFE755;
   color:#333333;
 }
 .header-bar a{
   color:#333333;
 }
+=======
+  background:#ffe755;
+  color:#333333;
+}
+.header-bar a,
+.main aside a{
+  color:#333333;
+}
+.main aside li + li{
+  border-top:1px solid;
+  border-color:#656565;
+}
+>>>>>>> 573e03075cce144c6236929bf4c1e35a80cafb09
