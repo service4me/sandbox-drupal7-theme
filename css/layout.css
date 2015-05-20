@@ -2,6 +2,7 @@
  * ------
  * The page is loaded by this order:
  *
+ * 1. Desktop
  * 1. Wrapper
  * 2. Header
  * 3. Menu
@@ -11,83 +12,63 @@
  * 7. Second Sidebar
  * 8. Footer */
 
-/* Wrapper
- * --------------
+
+
+/**
+ * desktop default layout
  */
-#page {
-  width: 960px;
-  margin: 0 auto; 
+@media screen and ( min-width: 987px ) {
+
+  /* Wrapper
+   * --------------
+   */
+
+  /* Top Menu
+   * --------------
+   */
+  #menu_top{
+    height:34px;
+  }
+  #menu_top .block-menu{
+    float:left;
+  }
+  #menu_top .menu > li{
+    float:left;
+    position:relative;
+  }
+  #menu_top .menu > li > a{
+    line-height:34px;
+    padding:0 1em;
+  }
+  #menu_top .menu > li > ul{
+    position:absolute;
+    left:-9999em;
+    width:170%;
+  }
+  #menu_top .menu > li:hover > ul{
+    left:auto;
+  }
+  #menu_top .menu  li li{
+    float:none;
+  }
+
 }
 
 /* Header
  * --------------
  */
-#page-header{
-  min-height:150px;
-  position:relative;
-}
-
-/* Header overlay
- * --------------
- * use this to overlay the usual header background
- * with an image block
- * will lay behind the Header right Region
- */
-#header_overlay{
-  position:absolute;
-  top:0;
-  left:0;
-  height:100%;
-  width:100%;
-  z-index:20;
-}
-
-/* Header right
- * --------------
- * display a Block at the right hand side of the header
- */
-#header_right{
-  width:320px;
-  position:relative;
-  float:right;
-  z-index:25;
-  border-left:1px solid #FFFFFF;   /* show borders for debugging */
-}
 
 /* Top Menu
  * --------------
  */
-#menu_top{
-height:34px;
-}
 #menu_top .block-menu{
-padding:0;
-float:left;
+  padding:0;
 }
 #menu_top ul,
 #menu_top li{
   list-style: none;
   padding:0;
   margin:0;
-}
-#menu_top .menu > li{
-float:left;
-position:relative;
-}
-#menu_top .menu > li > a{
-line-height:34px;
-padding:0 1em;
-}
-#menu_top .menu > li > ul{
-position:absolute;
-left:-9999em;
-width:170%;
-}
-#menu_top .menu > li:hover > ul{
-left:auto;
-}
-#menu_top .menu  li li{
-  float:none;
 }
 
 /* region columns
@@ -139,7 +120,7 @@ left:auto;
 
 /* Content
  * --------------
- * Layout rules. 
+ * Layout rules.
  * Disclaimer: do not change if you're not sure you know what you're doing.s
  */
 #content {
@@ -182,7 +163,7 @@ left:auto;
  * --------------
  */
 #sidebar-first {
-  float: left; 
+  float: left;
   width: 17%;
 }
 
@@ -190,7 +171,7 @@ left:auto;
  * --------------
  */
 #sidebar-second {
-  float: right; 
+  float: right;
   width: 17%;
 }
 
@@ -200,7 +181,7 @@ left:auto;
 /* line 32, ../sass/layout.sass */
 footer {
   float: none;
-  clear: both; 
+  clear: both;
 }
 
 /* Columns Inner
@@ -210,7 +191,7 @@ footer {
 /* line 76, ../sass/layout.sass */
 .inner {
   padding: 0;
-  margin: 0; 
+  margin: 0;
 }
 
 /* Navigation styles
@@ -272,7 +253,7 @@ footer {
 }
 #footer_second,
 #footer_fifth{
-  float:right;  
+  float:right;
 }
 #footer_first,
 #footer_second{
@@ -280,7 +261,7 @@ footer {
 }
 #footer_fourth,
 #footer_fifth{
-  width:50%;  
+  width:50%;
 }
 #footer_third{
 

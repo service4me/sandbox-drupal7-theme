@@ -29,6 +29,7 @@ stylesheets[all][] = includes/initializr/css/main.css
 stylesheets[all][] = css/default.css
 ; stylesheets[all][] = css/layout.css
 stylesheets[all][] = css/style.css
+stylesheets[all][] = css/colors.css
 stylesheets[print][] = css/print.css
 
 ; Compass Support

@@ -175,7 +175,7 @@
 
   <!-- ______________________ MAIN _______________________ -->
 
-  <div id="main" class="articles main clearfix container"<?php print $attributes; ?>>
+  <div id="main" class="main clearfix container"<?php print $attributes; ?>>
     <div class="inner wrapper">
 
     <?php if ($page['content_before']) { ?>

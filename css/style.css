@@ -1,3 +1,5 @@
+@import url('fixed-width.css');
+
 /* Font styles. */
 body {
   /* Setting up font size, leading and font family */
@@ -89,7 +91,6 @@ abbr {}
 .menu-bar > .inner{
   -webkit-box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
   box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
-  background:#FCC242;
 }
 .menu-bar nav{
   z-index:60;
@@ -105,9 +106,6 @@ abbr {}
   float:left;
   position:relative;
 }
-.menu-bar #block-search-form div{
-  float:left;
-}
 .menu-bar .block-menu li + li,
 .menu-bar .main-menu li + li,
 .menu-bar .menu li + li{
@@ -118,7 +116,6 @@ abbr {}
   font-size:1.4em;
   padding:0 1em;
   line-height:3em;
-  color:#FFFFFF;
 }
 .menu-bar .block-menu ul ul,
 .menu-bar .main-menu ul,
@@ -129,7 +126,6 @@ abbr {}
   z-index:50;
   -webkit-box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
   box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
-  background:#FCC242;
 }
 .menu-bar .block-menu ul ul a,
 .menu-bar .main-menu ul a,
@@ -143,14 +139,13 @@ abbr {}
 }
 
 .menu-bar #block-search-form input{
-margin-top:0.5em;
+  margin:1em;
 }
 
 .main nav li{
   display:block;
   margin:0;
 }
-.main
 nav a{
 }
 nav a:link,
@@ -200,30 +195,6 @@ nav a:visited{
   font-style: italic;
   font-size:1.5em;
 }
-.main .articles,
-.main > .inner > article{
-  float:left;
-  width:57%;
-}
-.with-content-regions .main .articles,
-.with-content-regions .main > .inner > article{
-  width:60%;
-}
-.with-content-regions .main .articles .inner,
-.with-content-regions .main > .inner > article .inner{
-  padding:0 5%;
-}
-.no-content-regions .main .articles,
-.no-content-regions .main > .inner > article{
-  width:100%;
-  float:none;
-}
-.articles article,
-.region-content .node{
-  float:none;
-  width:auto;
-  padding:2em 0;
-}
 .articles article + article,
 .region-content .node + .node{
   border-top:1px solid #FFE755;
@@ -232,28 +203,23 @@ nav a:visited{
   font-size:2em;
 }
 .content,
-#block-system-main{
+#block-system-main,
+#block-system-help{
   font-size:1.6em;
+}
+.section-admin #block-system-main,
+#block-system-help{
+  font-size:1.4em;
 }
 .content .content,
 #block-system-main .content{
   font-size:1em;
 }
 .main aside{
-  padding:0;
-  width:37%;
-  margin:0 0 1em 0;
+  margin-bottom:1em;
   -webkit-box-shadow:none;
   box-shadow:none;
   color:#242424;
-}
-.with-content-regions .main aside{
-  width:20%;
-  float:left;
-}
-.with-content-regions .main article + aside,
-.with-content-regions .main .articles + aside{
-  float:right;
 }
 .main aside .block-title,
 .main aside .title{
@@ -265,11 +231,8 @@ nav a:visited{
 /* .main aside .menu */
 .main aside .block,
 .main aside .widget{
-  margin:0 0 2em 0;
-  padding:2em 10%;
-  -webkit-box-shadow:inset 0 0 40px 0 rgba(255, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
-  box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.1), 0 5px 7px -4px rgba(0, 0, 0, 0.3);
-  background:#FFE755;
+  -webkit-box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.05), 0 5px 7px -4px rgba(0, 0, 0, 0.05);
+  box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.05), 0 5px 7px -4px rgba(0, 0, 0, 0.05);
 }
 .main aside #block-node-recent{
   background:#FFFFFF;
@@ -361,9 +324,8 @@ nav a:visited{
   margin:0;
   padding:2em 1em 1em 1em;
   line-height:2em;
-  background: #FFE755;
-  -webkit-box-shadow:0 5px 7px -4px rgba(0, 0, 0, 0.3), inset 0 0 30px 0 rgba(255, 232, 15, 0.8);
-  box-shadow:0 5px 7px -4px rgba(0, 0, 0, 0.3), inset 0 0 30px 0 rgba(255, 232, 15, 0.8);
+  -webkit-box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.05), 0 5px 7px -4px rgba(0, 0, 0, 0.05);
+  box-shadow:inset 0 0 40px 0 rgba(0, 0, 0, 0.05), 0 5px 7px -4px rgba(0, 0, 0, 0.05);
 }
 .header-bar .menu li,
 .header-bar .sub-menu li{
@@ -376,91 +338,99 @@ nav a:visited{
 }
 
 /**
+ * drupal search block
+ */
+#block-search-form div{
+  float:left;
+}
+
+/**
  * drupal calender block
  */
 
-#main table th,
-#main table td{
-  padding:0.5em 2% 0.5em 0;
+.main th,
+.main td{
+  padding:0.5em 2%;
   border:none;
 }
-#main .calendar-calendar td{
+.main .calendar-calendar td{
   background:none;
   color:#000000;
   border:1px solid #000000;
   border-width:0 1px 1px 1px;
+  padding-left:0;
 }
-#main .calendar-calendar td + td{
+.main .calendar-calendar td + td{
   border-left:none;
 }
-#main .calendar-calendar table.mini{
+.main .calendar-calendar table.mini{
   text-align:center;
   margin:0 0 2em 0;
 }
-#main .calendar-calendar tr td.today,
-#main .calendar-calendar tr.odd td.today,
-#main .calendar-calendar tr.even td.today{
+.main .calendar-calendar tr td.today,
+.main .calendar-calendar tr.odd td.today,
+.main .calendar-calendar tr.even td.today{
   background:#FFFFFF;
   color:#000000;
 }
-#main .calendar-calendar table.mini td.has-events{
+.main .calendar-calendar table.mini td.has-events{
   background:#FCC242;
 }
-#main .calendar-calendar tr{
+.main .calendar-calendar tr{
   background:none;
 }
 
-#main .calendar-empty{
+.main .calendar-empty{
 }
-#main .calendar-calendar table.mini td.empty,
-#main td.empty .calendar-empty{
+.main .calendar-calendar table.mini td.empty,
+.main td.empty .calendar-empty{
 background:none;
 }
-#main .date-nav .pager{
+.main .date-nav .pager{
   position:absolute;
   width:100%;
   top:-0.4em;
 }
-.page-kalender #main .date-nav .pager{
+.page-kalender .main .date-nav .pager{
 }
-#main .date-nav .pager li{
+.main .date-nav .pager li{
   margin:0;
   background:#FFFFFF;
   border:none;
   text-align:center;
 }
-#main .date-nav .pager a{
+.main .date-nav .pager a{
   font-size:3em;
   line-height:0.6;
   display:inline-block;
   padding-top:1px;
   padding-bottom:0;
 }
-.page-kalender #main .date-nav .pager a{
+.page-kalender .main .date-nav .pager a{
   font-size:1em;
 }
-#main .view .date-nav{
+.main .view .date-nav{
   padding:0;
 }
-.page-kalender #main .date-prev{ left:0; text-align:left; }
-.page-kalender #main .date-next{ right:0; text-align:left; }
+.page-kalender .main .date-prev{ left:0; text-align:left; }
+.page-kalender .main .date-next{ right:0; text-align:left; }
 
-#main .calendar-calendar th.days{
+.main .calendar-calendar th.days{
   background:#FCC242;
   color:#000000;
   border:1px solid #000000;
   border-width:1px 1px 1px 1px;
 }
-#main .calendar-calendar th.days + th.days{
+.main .calendar-calendar th.days + th.days{
   border-left:none;
 }
-.page-kalender #main .date-heading{
+.page-kalender .main .date-heading{
   padding-top:30px;
 }
-.page-kalender #main .year-view div.month-view div.date-nav{
+.page-kalender .main .year-view div.month-view div.date-nav{
   background:#FCC242;
 }
-.page-kalender #main .calendar-calendar tr{
+.page-kalender .main .calendar-calendar tr{
   background:none;
 }
 #page #block-views-menu_auswahl-block{
