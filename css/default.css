@@ -305,13 +305,17 @@ abbr {
   white-space: nowrap;
 }
 /* Form styles */
+fieldset{
+  margin:0 0 0.5em 0;
+}
 button, input, select, textarea{
 background:#FFFFFF;
 border:none;
 padding:0.5em 0;
 border-radius:5px;
-margin:0 0.5em 0.5em 0.5em;
+margin:0 2% 0.5em 0;
 color:#666666;
+max-width:98%;
 }
 .form-textarea-wrapper textarea{
 color:#666666;
@@ -323,6 +327,7 @@ transition:all ease 500ms;
 }
 
 input[type="text"],
+input[type="password"],
 select,
 textarea{
 box-shadow:inset 0 0 25px -5px rgba(0, 0, 0, 0.2);
@@ -334,10 +339,12 @@ padding-right:1em;
 textarea{
 padding:1em;
 }
-input[type="text"]{
+input[type="text"],
+input[type="password"]{
 text-indent:1em;
 }
 input[type="text"]:focus,
+input[type="password"]:focus,
 select:focus,
 textarea:focus{
 box-shadow:inset 0 0 15px -5px rgba(0, 0, 0, 0.3);
