@@ -1,6 +1,6 @@
 <?php 
-  echo '<pre>', var_dump(empty($user_picture)), '</pre>';
-  echo '<pre>', var_dump($page), '</pre>';
+  // echo '<pre>', var_dump(empty($user_picture)), '</pre>';
+  // echo '<pre>', var_dump($page), '</pre>';
 ?>
 <<?php if ( !$page ) { 
 ?>article<?php } else { 
