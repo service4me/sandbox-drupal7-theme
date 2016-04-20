@@ -497,14 +497,6 @@ body > .menu-bar{
   background:#FCFCFC;
 }
 
-.with-content-regions .main .articles,
-.with-content-regions .main > .inner > article{
-  width:60%;
-}
-.with-content-regions .main .articles .inner,
-.with-content-regions .main > .inner > article .inner{
-  padding:0 5%;
-}
 .no-content-regions .main .articles,
 .no-content-regions .main > .inner > article{
   width:100%;
@@ -782,14 +774,6 @@ article .meta li:nth-child(2n+1){
 .main > .inner > aside{
   padding:0;
   margin:0 0 1em 0;
-}
-.with-content-regions .main aside{
-  width:20%;
-  float:left;
-}
-.with-content-regions .main article + aside,
-.with-content-regions .main .articles + aside{
-  float:right;
 }
 .main aside .block-title,
 .main aside .title{
@@ -1652,7 +1636,14 @@ body #buddypress .activity-list li.mini .activity-avatar img.FB_profile_pic{
     border-bottom:none;
   }
   .main > .inner > article{
-    width:65%;
+  }
+  .with-content-regions .main .articles,
+  .with-content-regions .main > .inner > article{
+    width:60%;
+  }
+  .with-content-regions .main .articles .inner,
+  .with-content-regions .main > .inner > article .inner{
+    padding:0 5%;
   }
   article#content > .inner{
     margin-right:4em;
@@ -1673,6 +1664,14 @@ body #buddypress .activity-list li.mini .activity-avatar img.FB_profile_pic{
     padding:0;
     width:35%;
     margin:0 0 1em 0;
+  }
+  .with-content-regions .main aside{
+    width:20%;
+    float:left;
+  }
+  .with-content-regions .main article + aside,
+  .with-content-regions .main .articles + aside{
+    float:right;
   }
   .archive .main > .inner > aside{
     width:25%;
