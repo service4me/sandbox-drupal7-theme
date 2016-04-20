@@ -47,22 +47,33 @@ function sandbox_js_alter(&$javascript){
   $base_path = base_path();
   $theme_path = drupal_get_path('theme', 'sandbox');
 
-  $jQuery_version = '1.11.0';
+  $jQuery_version = '1.11.3';
   $jQuery_migrate_version = '1.2.1';
   $modernizr_version = '2.6.2';
 
-  $jQuery_path = '/includes/initializr/js/vendor/jquery-' . $jQuery_version . '.min.js';
-  $jQuery_migrate_path = '/includes/jquery-migrate/jquery-migrate-' . $jQuery_migrate_version . '.min.js';
-  $modernizr_path = '/includes/initializr/js/vendor/modernizr-' . $modernizr_version . '-respond-1.1.0.min.js';
+  $jQuery_path = '/js/jquery-' . $jQuery_version . '.min.js';
+  $jQuery_migrate_path = '/js/jquery-migrate-' . $jQuery_migrate_version . '.min.js';
+  $modernizr_path = '/js/modernizr-' . $modernizr_version . '-respond-1.1.0.min.js';
+  $modernizr_addons_path = '/js/modernizr-addons.js';
+  $jQuery_plugins_path = '/js/jquery.plugins.js';
+  $theme_js_path = '/js/actions.js';
 
-  if (!module_exists('modernizr')) {
+  if ( module_exists('modernizr')) {
+    $javascript['sites/all/libraries/modernizr/modernizr.custom.87422.js']['data'] = $base_path . $theme_path . $modernizr_path;
+  } else {
     drupal_add_js($base_path . $theme_path . $modernizr_path, array(
       'group' => JS_LIBRARY,
       'every_page' => true,
       'version' => $modernizr_version,
       'weight' => -21
-    ));
+    ));  
   }
+  drupal_add_js($base_path . $theme_path . $modernizr_addons_path, array(
+    'group' => JS_LIBRARY,
+    'every_page' => true,
+    'version' => $modernizr_version,
+    'weight' => -20.5
+  ));
 
   if (!module_exists('jquery_update')) {
     $javascript['misc/jquery.js']['data'] = $base_path . $theme_path . $jQuery_path;
@@ -75,6 +86,22 @@ function sandbox_js_alter(&$javascript){
       'weight' => -19.5
     ));
   }
+  drupal_add_js($base_path . $theme_path . $jQuery_plugins_path, array(
+    'group' => JS_LIBRARY,
+    'every_page' => true,
+    'weight' => -19
+  ));
+  drupal_add_js($base_path . $theme_path . $theme_js_path, array(
+    'group' => JS_LIBRARY,
+    'every_page' => true,
+    'weight' => -17.5
+  ));
+  drupal_add_js('var sandboxTheme_jsdebug = ' . json_encode($javascript) . ';', array(
+    'group' => JS_LIBRARY,
+    'type' => 'inline',
+    'every_page' => true,
+    'weight' => -18.5
+  ));
 }
 
 /**
@@ -105,7 +132,7 @@ function sandbox_preprocess_html(&$vars) {
 
   $theme = $vars['sandbox'];
   $page = $vars['page'];
-
+  
   if ( $theme['settings']['classes'] ) {
 
     // Adding a class to #main in wireframe mode
@@ -190,6 +217,18 @@ function sandbox_preprocess_html(&$vars) {
   // $theme['debug'] = $vars['page']['content']['system_main']['nodes'];
   // echo var_dump($theme['page']['type']);
   $vars['sandbox'] = $theme;
+  
+  drupal_add_js('
+    var sandboxTheme_data = {
+      theme:' . json_encode($theme) . ',
+      page: ' . json_encode($page) . '
+    }
+  ', array(
+    'group' => JS_LIBRARY,
+    'type' => 'inline',
+    'every_page' => true,
+    'weight' => -18.5
+  ));
 }
 
 /**
@@ -280,6 +319,18 @@ function sandbox_preprocess_page(&$vars, $hook) {
   // $theme['debug'] = $theme['page']['node_ids'];
   // set the new theme variable
   $vars['sandbox'] = $theme;
+  
+  drupal_add_js('
+    (function($){
+      $.extend(true, sandboxTheme_data.theme, ' . json_encode($theme) . ');
+      $.extend(true, sandboxTheme_data.page, ' . json_encode($page) . ');
+    })(jQuery);
+  ', array(
+    'group' => JS_LIBRARY,
+    'type' => 'inline',
+    'every_page' => true,
+    'weight' => -18
+  ));
 }
 
 function sandbox_preprocess_node(&$vars) {
@@ -401,6 +452,64 @@ function sandbox_theme_registry_alter(&$theme_registry) {
     }
   }
 }
+
+/**
+* Override theme_image_style().
+* Use the required image style as usual, except if a special
+* imagestylename_themename style exists, in which case that style
+* overrides the default.
+*/
+function sandbox_image_style($variables) {
+  global $theme;
+  drupal_set_message($theme, 'status', false);
+  if (array_key_exists($variables['style_name'] . '_' . $theme, image_styles())) {
+    $variables['style_name'] = $variables['style_name'] . '_' . $theme;
+  }
+
+  // Starting with Drupal 7.9, the width and height attributes are
+  // added to the img tag. Adding the if clause to conserve
+  // compatibility with Drupal < 7.9
+  if (function_exists('image_style_transform_dimensions')) {
+    // Determine the dimensions of the styled image.
+    $dimensions = array(
+      'width' => $variables['width'],
+      'height' => $variables['height'],
+    );
+
+    image_style_transform_dimensions($variables['style_name'], $dimensions);
+
+    $variables['width'] = $dimensions['width'];
+    $variables['height'] = $dimensions['height'];
+  }
+
+  $variables['path'] = image_style_url($variables['style_name'], $variables['path']);
+  return theme('image', $variables);
+}
+
+/**
+ * Implements hook_image_default_styles().
+ *
+function sandbox_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: thumbnail-wide.
+  $styles['thumbnail-wide'] = array(
+    'label' => 'Vorschautbild Weit',
+    'effects' => array(
+      array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 400,
+          'height' => 125,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  return $styles;
+}*/
+
 // PULL THE FIRST MENU ITEM AND GET THE MENU NAME FROM IT
 /**
  * Preprocesses the rendered tree for theme_menu_tree().

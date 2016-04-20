@@ -26,8 +26,9 @@
  * @see template_process()
  */
 ?>
+<?php 
+ // echo '<pre>', var_dump($content), '</pre>';
+?>
 <?php if ($content): ?>
-  <div class="<?php print $classes; ?>">
-    <?php print $content; ?>
-  </div>
+  <?php print $content; ?>
 <?php endif; ?>

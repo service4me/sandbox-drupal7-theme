@@ -1,13 +1,16 @@
-.name-slogan {
-  color:#222222;
-}
 body{
-  background:#ffffff;
-  color:#222222;
+  background:#F6F6F6;
+  color:#666666;
 }
-a:link,
-a:visited{
-  color:#242424;
+.content a:link, 
+.content a:visited,
+.entry-summary a:link, 
+.entry-summary a:visited,
+.entry-meta a:link, 
+.entry-meta a:visited,
+.content h3,
+.entry-summary h3{
+  color:#FCC242;
 }
 .name-slogan,
 .name-slogan a,
@@ -22,33 +25,41 @@ a:visited{
   background:#FCC242;
   color:#FFFFFF;
 }
-.menu-bar a{
-  color:#FFFFFF;
-  background:#fcc242;
-  color:#fefefe;
-}
-.menu-bar a:link,
-.menu-bar a:visited{
-  color:#fefefe;
+.menu-bar .current-menu-item > a{
+  color:#FCC242;
 }
 .header-bar .menu,
 .header-bar .sub-menu,
 .main aside .block,
 .main aside .widget{
   background:#FFE755;
-  color:#333333;
-}
-.header-bar a{
-  color:#333333;
-}
-  background:#ffe755;
-  color:#333333;
+  color:#232323;
 }
 .header-bar a,
 .main aside a{
-  color:#333333;
+  color:#232323;
 }
 .main aside li + li{
   border-top:1px solid;
-  border-color:#656565;
+  border-color:#666666;
 }
+button,
+input,
+select,
+textarea {
+	background-color: #F6F6F6;
+}
+button:hover,
+button:focus,
+input[type="submit"]:focus,
+input[type="submit"]:hover{
+	background-color: #FFFFFF;
+}
+input,
+textarea {
+	color: #666666;
+}
+.post-password-form label {
+	color: #666666;
+}
+

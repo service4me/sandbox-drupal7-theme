@@ -24,12 +24,11 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
-stylesheets[all][] = includes/initializr/css/normalize.min.css
-stylesheets[all][] = includes/initializr/css/main.css
+stylesheets[all][] = css/normalize.min.css
 stylesheets[all][] = css/default.css
 ; stylesheets[all][] = css/layout.css
 stylesheets[all][] = css/style.css
-stylesheets[all][] = css/colors.css
+; stylesheets[all][] = css/colors.css
 stylesheets[print][] = css/print.css
 
 ; Compass Support

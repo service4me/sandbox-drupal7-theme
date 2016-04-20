@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Image Style thumbnail-wide feature.
+ */
+
+include_once 'image_style_thumbnail_wide.features.inc';

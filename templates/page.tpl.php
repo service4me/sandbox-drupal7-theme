@@ -69,11 +69,12 @@
  * @see template_process()
  * @see html.tpl.php
  */
+ $is_single = $sandbox['page']['type'] != 'single';
 ?>
 
   <!-- ______________________ HEADER _______________________ -->
-  <header id="siteHeader" class="clearfix site-header container">
-    <div class="inner wrapper">
+  <header id="siteHeader" class="site-header container">
+    <div class="inner wrapper clearfix">
 
     <?php
     /*
@@ -118,7 +119,7 @@
       */
       if ($page['header']) { ?>
 
-      <aside id="headerBar" class="sidebar region header-bar">
+      <aside id="headerBar" class="sidebar region header-bar region-header-bar">
         <div class="inner clearfix">
           <?php print render($page['header']); ?>
         </div>
@@ -126,7 +127,7 @@
 
     <?php } elseif ($secondary_menu) { ?>
 
-      <aside id="headerBar" class="menu sidebar header-bar secondary">
+      <aside id="headerBar" class="menu sidebar header-bar secondary region-header-bar">
         <div class="inner clearfix">
           <?php print theme('links', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary', 'class' => array('links', 'clearfix', 'sub-menu')))); ?>
       </aside>
@@ -144,7 +145,7 @@
       */
       if ( $page['menu_bar'] ) { ?>
 
-      <section id="menuBar" class="menu-bar container sidebar region">
+      <section id="menuBar" class="menu-bar container sidebar region region-menu-bar">
         <div class="inner wrapper clearfix">
           <?php print render($page['menu_bar']); ?>
         </div>
@@ -156,7 +157,7 @@
       */
       } elseif ( $main_menu ) { ?>
 
-      <nav id="menuBar" class="menu-bar container sidebar">
+      <nav id="menuBar" class="menu-bar container sidebar region-menu-bar">
         <div class="inner wrapper clearfix">
         <?php print $main_menu; ?>
         </div>
@@ -166,7 +167,7 @@
 
   <?php if ( $page['highlight'] ) { ?>
   <!-- ______________________ HIGHLIGHT _______________________ -->
-  <aside id="highlightBar" class="container sidebar clearfix highlights region">
+  <aside id="highlightBar" class="container sidebar clearfix highlights region region-highlights">
     <div class="inner wrapper">
       <?php print render($page['highlight']); ?>
     </div>
@@ -175,38 +176,46 @@
 
   <!-- ______________________ MAIN _______________________ -->
 
-  <div id="main" class="main clearfix container"<?php print $attributes; ?>>
-    <div class="inner wrapper">
+  <main class="main container"<?php print $attributes; ?>>
+    <div class="inner wrapper clearfix">
 
+  <?php // if ( !$is_single ) { ?>
     <?php if ($page['content_before']) { ?>
-      <aside id="contentBefore" class="wrapper sidebar content-before region container">
+      <aside id="contentBefore" class="wrapper sidebar content-before region region-content-before container">
         <div class="inner">
           <?php print render($page['content_before']); ?>
         </div>
       </aside>
-    <?php } ?> <!-- /content-before -->
+    <?php } ?>
+  <?php // } ?> <!-- /content-before -->
 
     <?php
       /*
       * @Regions Content
       * wrap different container based on page type
       */
-      if ( $sandbox['page']['type'] != 'single' ) { ?>
+      if ( $is_single ) { ?>
 
-      <section id="content" class="articles wrapper clearfix container">
+      <section id="content" class="articles wrapper container">
 
     <?php } else { ?>
 
-      <article id="content" class="wrapper container clearfix">
+      <article id="content" class="wrapper container">
 
     <?php } ?>
+        <div class="inner clearfix">
 
-        <div class="inner">
+      <?php if ( $breadcrumb ) { ?>
+        <?php print $breadcrumb; ?>
+      <?php } ?>
 
-        <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>
+      <?php if ( $is_single ) { ?>
+        <?php if ($title): ?>
+          <h1 class="title"><?php print $title; ?><?php print render($title_suffix); ?></h1>
+        <?php endif; ?>
+      <?php } else { ?>
+        <?php if ( $title|| $messages || $tabs || $action_links): ?>
           <header id="content-header">
-
-            <?php print $breadcrumb; ?>
 
             <?php if ($title): ?>
               <h1 class="title"><?php print $title; ?><?php print render($title_suffix); ?></h1>
@@ -226,32 +235,33 @@
           </header> <!-- /#content-header -->
         <?php endif; ?>
 
-        <section id="content-area" class="content-area region">
-          <?php print render($page['content']) ?>
-        </section>
+    <?php } ?>
+        <?php print render($page['content']) ?>
 
         <?php print $feed_icons; ?>
 
       </div>
-    <?php if ( $sandbox['page']['type'] != 'single' ) { ?>
+    <?php if ( $is_single ) { ?>
       </section>
     <?php } else { ?>
       </article>
     <?php } ?><!-- /content -->
 
+  <?php // if ( !$is_single ) { ?>
     <?php if ($page['content_after']): ?>
-      <aside id="contenAfter" class="sidebar region content-after wrapper container">
+      <aside id="contenAfter" class="sidebar region content-after region-content-before wrapper container">
         <div class="inner">
           <?php print render($page['content_after']); ?>
         </div>
       </aside>
-    <?php endif; ?> <!-- /content-after -->
+    <?php endif; ?>
+  <?php // } ?> <!-- /content-after -->
     </div>
-  </div> <!-- /main -->
+  </main> <!-- /main -->
 
   <!-- ______________________ FOOTER _______________________ -->
 
-  <footer id="siteFooter" class="region container clearfix site-footer">
+  <footer id="siteFooter" class="region container clearfix site-footer region-site-footer">
     <div class="inner wrapper">
       <?php if ( $page['footer'] ) { ?>
         <?php print render($page['footer']); ?>

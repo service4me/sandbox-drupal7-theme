@@ -1,0 +1,7 @@
+name = Image Style thumbnail-wide
+description = Image Style Vorschaubild Weit
+core = 7.x
+package = Image Styles
+dependencies[] = image
+features[features_api][] = api:2
+features[image][] = thumbnail-wide

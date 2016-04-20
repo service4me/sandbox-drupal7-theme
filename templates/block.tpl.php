@@ -43,13 +43,23 @@
  *
  * @ingroup themeable
  */
-?><div id="block-<?php print $block->module .'-'. $block->delta ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
-  <div class="block-inner">
+?>
+<?php 
+  $is_systemMain = $block->module === 'system' && $block->delta === 'main';
+  
+  // echo '<pre>', var_dump($block), '</pre>';
+?>
+<?php if ( !$is_systemMain ) { ?>
+<div id="<?php print $block->module .'-'. $block->delta ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+  <div class="inner">
+<?php } ?>
     <?php print render($title_prefix); ?>
   <?php if ($block->subject): ?>
-    <h2 class="block-title"<?php print $title_attributes; ?>><?php print $block->subject ?></h2>
+    <h2 class="title"<?php print $title_attributes; ?>><?php print $block->subject ?></h2>
   <?php endif;?>
     <?php print render($title_suffix); ?>
 	  <?php print $content; ?>
+<?php if ( !$is_systemMain ) { ?>
   </div>
 </div> <!-- /block-inner /block -->
+<?php } ?>
