@@ -132,6 +132,9 @@ function sandbox_preprocess_html(&$vars) {
 
   $theme = $vars['sandbox'];
   $page = $vars['page'];
+  $theme['is_front'] = $vars['is_front'];
+  
+  // echo '<pre>', var_dump($theme['page']['is_front']), '</pre>';
   
   if ( $theme['settings']['classes'] ) {
 
@@ -216,11 +219,32 @@ function sandbox_preprocess_html(&$vars) {
   // $theme['debug'] = $theme['page']['node_ids'];
   // $theme['debug'] = $vars['page']['content']['system_main']['nodes'];
   // echo var_dump($theme['page']['type']);
+  // echo '<pre>', var_dump($page), '</pre>';
+  
+  if ( $theme['page']['type'] === 'archive' ) {
+    $theme['id'] = -1;
+  } else if ( $theme['page']['type'] === 'single' ) {
+    $theme['id'] = $theme['page']['node_ids'][0];
+  }
+  if ( $theme['is_front'] ) {
+    $theme['id'] = 0;
+  }
+  
+  $jsTheme = array(
+    'id' => $theme['id'],
+    'info' => array(
+      'is_drupal' => true,
+      'is_front_page' => filter_var($theme['is_front'], FILTER_VALIDATE_BOOLEAN),
+      'is_home' => filter_var($theme['is_front'], FILTER_VALIDATE_BOOLEAN),
+    ),
+  );
+  
+  // echo '<pre>', var_dump($theme), '</pre>';
   $vars['sandbox'] = $theme;
   
   drupal_add_js('
     var sandboxTheme_data = {
-      theme:' . json_encode($theme) . ',
+      theme:' . json_encode($jsTheme) . ',
       page: ' . json_encode($page) . '
     }
   ', array(
@@ -318,11 +342,29 @@ function sandbox_preprocess_page(&$vars, $hook) {
 
   // $theme['debug'] = $theme['page']['node_ids'];
   // set the new theme variable
+  
+  // echo '<pre>', var_dump($vars['sandbox']), '</pre>';
+  
+  $jsTheme = array(
+    'name' => '',
+    'info' => array(
+      'is_admin' => filter_var(path_is_admin(), FILTER_VALIDATE_BOOLEAN),
+      'is_archive' => filter_var($theme['page']['type'] === 'archive', FILTER_VALIDATE_BOOLEAN),
+      'is_author' => false,
+      'is_category' => false,
+      'is_page' => filter_var($theme['page']['type'] === 'single', FILTER_VALIDATE_BOOLEAN),
+      'is_search' => false,
+      'is_single' =>  filter_var($theme['page']['type'] === 'single', FILTER_VALIDATE_BOOLEAN),
+      'is_singular' => filter_var($theme['page']['type'] === 'single', FILTER_VALIDATE_BOOLEAN),
+      'is_tag' => false,
+      'is_tax' => false,
+    ),
+  );
   $vars['sandbox'] = $theme;
   
   drupal_add_js('
     (function($){
-      $.extend(true, sandboxTheme_data.theme, ' . json_encode($theme) . ');
+      $.extend(true, sandboxTheme_data.theme, ' . json_encode($jsTheme) . ');
       $.extend(true, sandboxTheme_data.page, ' . json_encode($page) . ');
     })(jQuery);
   ', array(

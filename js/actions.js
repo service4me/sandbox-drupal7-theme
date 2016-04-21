@@ -39,27 +39,36 @@
               featureOptions,
               dataName,
               dataValue,
-              data = arguments[0];
+              data = arguments[0],
+              is_drupal = data.theme.info.hasOwnProperty('is_drupal') && data.theme.info.is_drupal;
               
           sandboxTheme.info = {};
           sandboxTheme.page = {};
           
           if ( $.isPlainObject(data) ) {
-            for ( dataName in data ) {
-              dataValue = dataName === 'id' ? parseInt(data[dataName]) : data[dataName];
-              
-              if ( dataName !== 'info') {
-                sandboxTheme.page[dataName] = dataValue;
+          
+            $.log(is_drupal);
+            if ( is_drupal ) {
+              sandboxTheme.info = data.theme.info;
+              sandboxTheme.page = data.page;
+            } else {
+            
+              for ( dataName in data ) {
+                dataValue = dataName === 'id' ? parseInt(data[dataName]) : data[dataName];
+                                
+                if ( dataName !== 'info') {
+                  sandboxTheme.page[dataName] = dataValue;
+                }
               }
-            }
-            if ( data.hasOwnProperty('info') ) {
-              for ( dataName in data.info ) {
-                sandboxTheme.info[dataName] = data.info[dataName];
+              if ( data.hasOwnProperty('info') ) {
+                for ( dataName in data.info ) {
+                  sandboxTheme.info[dataName] = data.info[dataName];
+                }
               }
             }
           }
           
-          $.log(data.info);
+          $.log(sandboxTheme);
           
           /**
            * Loop through all features to set all neccessary data
@@ -308,8 +317,7 @@
       },
       resize: function resize(){
         var disable = M.touch ? false : M.check_breakpoint(this.options.disableOn);
-        $.log(M.touch);
-        $.log(disable);
+
         if ( disable ) {
           if ( this.info.isActive ) {
             this.disable();

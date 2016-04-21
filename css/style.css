@@ -676,9 +676,13 @@ article .meta li:before{
 article a.post-thumbnail{
   margin:-2.4em -2.4em 2em -2.4em;
   display:block;
+  height:15em;
+  background-repeat:none;
+  background-position:50% 50%;
+  background-size:cover;
 }
 article a.post-thumbnail img{
-  display:block;
+  display:none;
   width:100%;
   height:auto;
   margin:0;
