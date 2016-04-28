@@ -779,6 +779,21 @@ article .meta li:nth-child(2n+1){
   padding:0;
   margin:0 0 1em 0;
 }
+.main .content-before > .inner{
+  padding-right:2.4em;
+}
+.main .content-after > .inner{
+  padding-left:2.4em;
+}
+.main aside .block,
+.main > .inner > aside .widget{
+  margin:0 0 2.4em 0;
+}
+.main aside .block > .inner,
+.main > .inner > aside .widget > .inner{
+  background:#FFFFFF;
+  padding:2.4em;
+}
 .main aside .block-title,
 .main aside .title{
   padding:0;
@@ -787,9 +802,6 @@ article .meta li:nth-child(2n+1){
   line-height:1.2;
 }
 /* .main aside .menu */
-.main aside .block,
-.main > .inner > aside .widget{
-}
 .main aside #block-node-recent{
   background:#FFFFFF;
 }
@@ -1297,24 +1309,6 @@ background:none;
   width:50%;
 }
 
-/**
- * Custom boxes
- * ============
- */
-.articles article.post-8 > .inner{
-  background:#666666;
-  color:#FFFFFF;
-}
-.articles article.post-20 > .inner{
-  background:#FCC242;
-  color:#FFFFFF;
-}
-.articles article.post-8 .title,
-.articles article.post-20 .title,
-.articles article.post-8 a,
-.articles article.post-20 a{
-  color:#FFFFFF;
-}
 .articles article.teaser > .inner{
   padding:0;
   position:relative;
@@ -1629,7 +1623,7 @@ body #buddypress .activity-list li.mini .activity-avatar img.FB_profile_pic{
     padding-left:2em;
     padding-right:2em;
   }
-  .archive .main .articles,
+  .with-content-region .main .articles,
   .main > .inner > article,
   body.buddypress #content,
   .page-template-page-events .main .articles{
@@ -1650,10 +1644,6 @@ body #buddypress .activity-list li.mini .activity-avatar img.FB_profile_pic{
     padding:0 5%;
   }
   article#content > .inner{
-    margin-right:4em;
-  }
-  article#content.post-28 > .inner{
-    margin-right:2em;
   }
   .archive .articles article > .inner,
   .page-template-page-events .articles article > .inner{
@@ -1666,7 +1656,7 @@ body #buddypress .activity-list li.mini .activity-avatar img.FB_profile_pic{
   }
   .main > .inner > aside{
     padding:0;
-    width:35%;
+    width:25%;
     margin:0 0 1em 0;
   }
   .with-content-regions .main aside{
@@ -1677,7 +1667,7 @@ body #buddypress .activity-list li.mini .activity-avatar img.FB_profile_pic{
   .with-content-regions .main .articles + aside{
     float:right;
   }
-  .archive .main > .inner > aside{
+  .with-content-region .main > .inner > aside{
     width:25%;
   }
   #content.type-events > .inner > aside{
