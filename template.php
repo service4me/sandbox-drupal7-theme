@@ -1,11 +1,24 @@
 <?php
 
 /**
+ * @file
+ * template.php Sandbox Template-Functions file
+ * @todo
+ * !!! NEEDS to ReWrite !!!
+ *
+ *
+ */
+
+
+/**
  * Here we override the default HTML output of drupal.
  * refer to http://drupal.org/node/550722
  */
 
-// Auto-rebuild the theme registry during theme development.
+/**
+ * Theme Settings
+ * Auto-rebuild the theme registry during theme development.
+ */
 if (theme_get_setting('clear_registry')) {
   // Rebuild .info data.
   system_rebuild_theme_data();
@@ -17,6 +30,15 @@ if (theme_get_setting('sandbox_tabs')) {
   drupal_add_css( drupal_get_path('theme', 'sandbox') .'/css/tabs.css');
 }
 
+/**
+ * Header elements
+ * ===============
+ */
+
+
+/**
+ * Remove unnecessary CSS files
+ */
 function sandbox_css_alter(&$css) {
   $exclude = array(
     'modules/aggregator/aggregator.css' => FALSE,
@@ -42,22 +64,35 @@ function sandbox_css_alter(&$css) {
   $css = array_diff_key($css, $exclude);
 }
 
+/**
+ * build Javascript stack
+ * ======================
+ * includes jQuery, jQuery migrate plugin, modernizr
+ * includes themes "actions.js"
+ */
 function sandbox_js_alter(&$javascript){
 
   $base_path = base_path();
   $theme_path = drupal_get_path('theme', 'sandbox');
 
+  // versions
   $jQuery_version = '1.11.3';
   $jQuery_migrate_version = '1.2.1';
   $modernizr_version = '2.6.2';
 
+  // paths
   $jQuery_path = '/js/jquery-' . $jQuery_version . '.min.js';
   $jQuery_migrate_path = '/js/jquery-migrate-' . $jQuery_migrate_version . '.min.js';
   $modernizr_path = '/js/modernizr-' . $modernizr_version . '-respond-1.1.0.min.js';
+  
+  // plugin paths
   $modernizr_addons_path = '/js/modernizr-addons.js';
   $jQuery_plugins_path = '/js/jquery.plugins.js';
+  
+  // theme actions
   $theme_js_path = '/js/actions.js';
 
+  // support for drupal modernizr module
   if ( module_exists('modernizr')) {
     $javascript['sites/all/libraries/modernizr/modernizr.custom.87422.js']['data'] = $base_path . $theme_path . $modernizr_path;
   } else {
@@ -68,13 +103,17 @@ function sandbox_js_alter(&$javascript){
       'weight' => -21
     ));  
   }
+  
+  // modernizr addons
   drupal_add_js($base_path . $theme_path . $modernizr_addons_path, array(
     'group' => JS_LIBRARY,
     'every_page' => true,
     'version' => $modernizr_version,
     'weight' => -20.5
   ));
-
+  
+  
+  // support for jQuery update module
   if (!module_exists('jquery_update')) {
     $javascript['misc/jquery.js']['data'] = $base_path . $theme_path . $jQuery_path;
     $javascript['misc/jquery.js']['version'] = $jQuery_version;
@@ -86,31 +125,106 @@ function sandbox_js_alter(&$javascript){
       'weight' => -19.5
     ));
   }
+  
+  // add jquery-plugins
   drupal_add_js($base_path . $theme_path . $jQuery_plugins_path, array(
     'group' => JS_LIBRARY,
     'every_page' => true,
     'weight' => -19
   ));
+  
+  // add theme actions
   drupal_add_js($base_path . $theme_path . $theme_js_path, array(
     'group' => JS_LIBRARY,
     'every_page' => true,
     'weight' => -17.5
   ));
-  drupal_add_js('var sandboxTheme_jsdebug = ' . json_encode($javascript) . ';', array(
-    'group' => JS_LIBRARY,
-    'type' => 'inline',
-    'every_page' => true,
-    'weight' => -18.5
-  ));
 }
 
 /**
- * Implements template_preprocess().
+ * Internal Functions
+ * ==================
  */
-function sandbox_preprocess(&$vars, $hook){
 
+/**
+ * gets all node ids
+ * =================
+ *
+ */
+function sandbox_get_node_ids($page){
+  $node_ids = false;
+  
+  if ( isset($page['content']['system_main']['nodes']) ) {
+    $node_ids = element_children($page['content']['system_main']['nodes']);
+  }
+  return $node_ids;
+}
+
+
+/**
+ * detects page type for various preprocess functions
+ * ==================================================
+ *
+ */
+function sandbox_detect_page_type($theme, $page){
+  $pageType = 'collection';
+  // echo '<pre>', var_dump($theme['page']), '</pre>';
+  // echo '<pre>', var_dump($page), '</pre>';
+
+  // Do we have nodes?
+  if ( $theme['page']['node_ids'] ) {
+  
+    // More then one?
+    if ( count($theme['page']['node_ids']) > 1 ) {
+      $pageType = 'archive';
+    } else {
+      $pageType = 'single';
+    }
+  }
+  return $pageType;
+}
+
+/**
+ * Converts a string to a suitable html ID attribute.
+ *
+ * http://www.w3.org/TR/html4/struct/global.html#h-7.5.2 specifies what makes a
+ * valid ID attribute in HTML. This function:
+ *
+ * - Ensure an ID starts with an alpha character by optionally adding an 'n'.
+ * - Replaces any character except A-Z, numbers, and underscores with dashes.
+ * - Converts entire string to lowercase.
+ *
+ * @param $string
+ *  The string
+ * @return
+ *  The converted string
+ */
+function sandbox_id_safe($string) {
+  // Replace with dashes anything that isn't A-Z, numbers, dashes, or underscores.
+  $string = strtolower(preg_replace('/[^a-zA-Z0-9_-]+/', '-', $string));
+  // If the first character is not a-z, add 'n' in front.
+  if (!ctype_lower($string{0})) { // Don't use ctype_alpha since its locale aware.
+    $string = 'id'. $string;
+  }
+  return $string;
+}
+
+/**
+ * Template Preprocesses
+ * =====================
+ */
+
+/**
+ * Implements template_preprocess()
+ * ================================
+ * build template variable 'sandbox'
+ */
+function sandbox_preprocess(&$vars, $hook) {
+  $current_theme = variable_get('theme_default','none');
+  
   if ( !isset($vars['sandbox']) ) {
     $vars['sandbox'] = array(
+      'name' => $current_theme,
       'settings' => array(
         'tabs' => filter_var(theme_get_setting('sandbox_tabs'), FILTER_VALIDATE_BOOLEAN),
         'classes' => filter_var(theme_get_setting('sandbox_classes'), FILTER_VALIDATE_BOOLEAN),
@@ -128,14 +242,20 @@ function sandbox_preprocess(&$vars, $hook){
   }
 }
 
+/**
+ * Preproces for html.tpl.php
+ */
 function sandbox_preprocess_html(&$vars) {
-
+  
+  // get theme vars
   $theme = $vars['sandbox'];
-  $page = $vars['page'];
+  $page = $vars['page'];  
+  // echo '<pre>', var_dump($theme), '</pre>';
+  
+  // Detect front page
   $theme['is_front'] = $vars['is_front'];
   
-  // echo '<pre>', var_dump($theme['page']['is_front']), '</pre>';
-  
+  // check theme settings for use of css classNames
   if ( $theme['settings']['classes'] ) {
 
     // Adding a class to #main in wireframe mode
@@ -195,31 +315,16 @@ function sandbox_preprocess_html(&$vars) {
       //drupal_set_message($section, 'status', false);
       $vars['classes_array'][] = drupal_html_class('section-' . $section);
     }
-
-    // Do we have nodes?
-    if ( isset($page['content']['system_main']['nodes']) ) {
-      // All nIds about to be loaded (without the #sorted attribute).
-      $theme['page']['node_ids'] = element_children($vars['page']['content']['system_main']['nodes']);
-
-      // More then one?
-      if ( count($theme['page']['node_ids']) > 1 ) {
-        $theme['page']['type'] = 'archive';
-      } else {
-        $theme['page']['type'] = 'single';
-      }
-
-    } else {
-      // no Nodes means you have a collection of something else
-      $theme['page']['type'] = 'collection';
-    }
+    
+    // get node ids
+    $theme['page']['node_ids'] = sandbox_get_node_ids($page);
+    
+    // Set page type
+    $theme['page']['type'] = sandbox_detect_page_type($theme, $page);
 
     // shorthand variables
     $vars['classes_array'][] = $theme['page']['type'];
-  }
-  // $theme['debug'] = $theme['page']['node_ids'];
-  // $theme['debug'] = $vars['page']['content']['system_main']['nodes'];
-  // echo var_dump($theme['page']['type']);
-  // echo '<pre>', var_dump($page), '</pre>';
+  }  
   
   if ( $theme['page']['type'] === 'archive' ) {
     $theme['id'] = -1;
@@ -229,9 +334,14 @@ function sandbox_preprocess_html(&$vars) {
   if ( $theme['is_front'] ) {
     $theme['id'] = 0;
   }
+  if ( !isset($theme['id']) ) {
+    $theme['id'] = -2;
+  }
   
+  if ( $theme['name'] == 'sandbox' ) {  
+  // adds js variable "sandboxTheme_data"
   $jsTheme = array(
-    'id' => $theme['id'],
+    'id' => intval($theme['id']),
     'info' => array(
       'is_drupal' => true,
       'is_front_page' => filter_var($theme['is_front'], FILTER_VALIDATE_BOOLEAN),
@@ -239,20 +349,21 @@ function sandbox_preprocess_html(&$vars) {
     ),
   );
   
-  // echo '<pre>', var_dump($theme), '</pre>';
-  $vars['sandbox'] = $theme;
+    drupal_add_js('
+      var sandboxTheme_data = {
+        theme:' . json_encode($jsTheme) . ',
+        page: ' . json_encode($page) . ',
+      }
+    ', array(
+      'group' => JS_LIBRARY,
+      'type' => 'inline',
+      'every_page' => true,
+      'weight' => -18.5
+    ));
+  }
   
-  drupal_add_js('
-    var sandboxTheme_data = {
-      theme:' . json_encode($jsTheme) . ',
-      page: ' . json_encode($page) . '
-    }
-  ', array(
-    'group' => JS_LIBRARY,
-    'type' => 'inline',
-    'every_page' => true,
-    'weight' => -18.5
-  ));
+  
+  $vars['sandbox'] = $theme;
 }
 
 /**
@@ -275,6 +386,9 @@ function sandbox_process_page(&$variables) {
   }
 }
 
+/**
+ * Preproces for page.tpl.php
+ */
 function sandbox_preprocess_page(&$vars, $hook) {
 
   // get the theme variable
@@ -286,24 +400,12 @@ function sandbox_preprocess_page(&$vars, $hook) {
     'elements' => array(),
     // 'source' => $page,
   );
-
-  // Do we have nodes?
-  if ( isset($page['content']['system_main']['nodes']) ) {
-    // All nIds about to be loaded (without the #sorted attribute).
-    $theme['page']['node_ids'] = element_children($vars['page']['content']['system_main']['nodes']);
-
-    // More then one?
-    if ( count($theme['page']['node_ids']) > 1 ) {
-      $theme['page']['type'] = 'archive';
-    } else {
-      $theme['page']['type'] = 'single';
-    }
-
-  } else {
-    // no Nodes means you have a collection of something else
-    $theme['page']['type'] = 'collection';
-
-  }
+ 
+  // get node ids
+  $theme['page']['node_ids'] = sandbox_get_node_ids($page);
+  
+  // Set page type
+  $theme['page']['type'] = sandbox_detect_page_type($theme, $page);
 
   if (isset($vars['node_title'])) {
     $vars['title'] = $vars['node_title'];
@@ -339,16 +441,11 @@ function sandbox_preprocess_page(&$vars, $hook) {
   } else {
     $vars['main_menu'] = FALSE;
   }
-
-  // $theme['debug'] = $theme['page']['node_ids'];
-  // set the new theme variable
-  
-  // echo '<pre>', var_dump($vars['sandbox']), '</pre>';
   
   $jsTheme = array(
     'name' => '',
     'info' => array(
-      'is_admin' => filter_var(path_is_admin(), FILTER_VALIDATE_BOOLEAN),
+      'is_admin' => filter_var(path_is_admin(current_path()), FILTER_VALIDATE_BOOLEAN),
       'is_archive' => filter_var($theme['page']['type'] === 'archive', FILTER_VALIDATE_BOOLEAN),
       'is_author' => false,
       'is_category' => false,
@@ -360,21 +457,27 @@ function sandbox_preprocess_page(&$vars, $hook) {
       'is_tax' => false,
     ),
   );
-  $vars['sandbox'] = $theme;
   
-  drupal_add_js('
-    (function($){
-      $.extend(true, sandboxTheme_data.theme, ' . json_encode($jsTheme) . ');
-      $.extend(true, sandboxTheme_data.page, ' . json_encode($page) . ');
-    })(jQuery);
-  ', array(
-    'group' => JS_LIBRARY,
-    'type' => 'inline',
-    'every_page' => true,
-    'weight' => -18
-  ));
+  if ( $theme['name'] == 'sandbox' ) { 
+    drupal_add_js('
+      (function($){
+        $.extend(true, sandboxTheme_data.theme, ' . json_encode($jsTheme) . ');
+        $.extend(true, sandboxTheme_data.page, ' . json_encode($page) . ');
+      })(jQuery);
+    ', array(
+      'group' => JS_LIBRARY,
+      'type' => 'inline',
+      'every_page' => true,
+      'weight' => -18
+    ));
+  }  
+  
+  $vars['sandbox'] = $theme;  
 }
 
+/**
+ * Preproces for node.tpl.php
+ */
 function sandbox_preprocess_node(&$vars) {
   // $theme = $vars['sandbox'];
   // $theme['debug'] = $theme['classes_array'];
@@ -390,6 +493,9 @@ function sandbox_preprocess_node(&$vars) {
   }
 }
 
+/**
+ * Preproces for block.tpl.php
+ */
 function sandbox_preprocess_block(&$vars, $hook) {
   // Add a striping class.
   $vars['classes_array'][] = 'block-' . $vars['block_zebra'];
@@ -418,11 +524,21 @@ function sandbox_preprocess_block(&$vars, $hook) {
   }
 }
 
+/**
+ * Preproces for item lists
+ * ========================
+ * adds clearfix to pager lists
+ */
 function sandbox_preprocess_item_list(&$vars, $hook) {
   if ( is_array($vars['attributes']) && isset($vars['attributes']['class']) && is_array($vars['attributes']['class']) && count($vars['attributes']['class']) > 0 && $vars['attributes']['class'][0] === 'pager' ) {
     $vars['attributes']['class'][] = 'clearfix';
   }
 }
+
+/**
+ * Special elements markup
+ * =======================
+ */
 
 /**
  * Return a themed breadcrumb trail.
@@ -488,87 +604,30 @@ function sandbox_breadcrumb($variables) {
  *
  */
 function sandbox_theme_registry_alter(&$theme_registry) {
-  foreach ($theme_registry['menu_tree']['preprocess functions'] as $key => $value) {
-    if ($value == 'template_preprocess_menu_tree') {
+  foreach ( $theme_registry['menu_tree']['preprocess functions'] as $key => $value ) {
+    if ( $value == 'template_preprocess_menu_tree' ) {
       unset($theme_registry['menu_tree']['preprocess functions'][$key]);
     }
   }
 }
 
 /**
-* Override theme_image_style().
-* Use the required image style as usual, except if a special
-* imagestylename_themename style exists, in which case that style
-* overrides the default.
-*/
-function sandbox_image_style($variables) {
-  global $theme;
-  drupal_set_message($theme, 'status', false);
-  if (array_key_exists($variables['style_name'] . '_' . $theme, image_styles())) {
-    $variables['style_name'] = $variables['style_name'] . '_' . $theme;
-  }
-
-  // Starting with Drupal 7.9, the width and height attributes are
-  // added to the img tag. Adding the if clause to conserve
-  // compatibility with Drupal < 7.9
-  if (function_exists('image_style_transform_dimensions')) {
-    // Determine the dimensions of the styled image.
-    $dimensions = array(
-      'width' => $variables['width'],
-      'height' => $variables['height'],
-    );
-
-    image_style_transform_dimensions($variables['style_name'], $dimensions);
-
-    $variables['width'] = $dimensions['width'];
-    $variables['height'] = $dimensions['height'];
-  }
-
-  $variables['path'] = image_style_url($variables['style_name'], $variables['path']);
-  return theme('image', $variables);
-}
-
-/**
- * Implements hook_image_default_styles().
- *
-function sandbox_image_default_styles() {
-  $styles = array();
-
-  // Exported image style: thumbnail-wide.
-  $styles['thumbnail-wide'] = array(
-    'label' => 'Vorschautbild Weit',
-    'effects' => array(
-      array(
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => 400,
-          'height' => 125,
-        ),
-        'weight' => 1,
-      ),
-    ),
-  );
-
-  return $styles;
-}*/
-
-// PULL THE FIRST MENU ITEM AND GET THE MENU NAME FROM IT
-/**
  * Preprocesses the rendered tree for theme_menu_tree().
  * http://drupal.org/node/767404
+ * PULL THE FIRST MENU ITEM AND GET THE MENU NAME FROM IT
  */
 function sandbox_preprocess_menu_tree(&$variables) {
-  // echo var_dump($variables['tree']);
   $pop = array_slice($variables['tree'], 0, 1);
   $menu_item = array_pop($pop);
   $variables['menu'] = $menu_item['#original_link'];
-  $variables['tree']      = $variables['tree']['#children'];
+  $variables['tree'] = $variables['tree']['#children'];
 }
-// PRINT THE MENU NAME WE PASSED ON
+
 /**
  * IMPLEMENTATION OF: theme_menu_tree()
  *
  * Returns HTML for a wrapper for a menu sub-tree.
+ * PRINT THE MENU NAME WE PASSED ON
  *
  * @param $variables
  *   An associative array containing:
@@ -579,31 +638,6 @@ function sandbox_preprocess_menu_tree(&$variables) {
  */
 function sandbox_menu_tree($variables) {
   return '<ul class="menu' . (($variables['menu']['menu_name']) ? ' ' . $variables['menu']['menu_name'] : '') . '">' . $variables['tree'] . '</ul>';
-}
-
-/**
- * Converts a string to a suitable html ID attribute.
- *
- * http://www.w3.org/TR/html4/struct/global.html#h-7.5.2 specifies what makes a
- * valid ID attribute in HTML. This function:
- *
- * - Ensure an ID starts with an alpha character by optionally adding an 'n'.
- * - Replaces any character except A-Z, numbers, and underscores with dashes.
- * - Converts entire string to lowercase.
- *
- * @param $string
- *  The string
- * @return
- *  The converted string
- */
-function sandbox_id_safe($string) {
-  // Replace with dashes anything that isn't A-Z, numbers, dashes, or underscores.
-  $string = strtolower(preg_replace('/[^a-zA-Z0-9_-]+/', '-', $string));
-  // If the first character is not a-z, add 'n' in front.
-  if (!ctype_lower($string{0})) { // Don't use ctype_alpha since its locale aware.
-    $string = 'id'. $string;
-  }
-  return $string;
 }
 
 
@@ -627,9 +661,7 @@ function sandbox_menu_link(array $variables){
   $sub_menu = false;
 
   if ( $element['#below'] ) {
-
     $sub_menu = drupal_render($element['#below']);
-
   }
 
   // Check if the user is logged in, that you are in the correct menu,
@@ -693,37 +725,4 @@ function sandbox_menu_local_tasks(&$variables) {
   }
 
   return $output;
-}
-
-function sandbox_detect_orientation($height, $width){
-
-  $orientation = array(
-
-    'height' => $height,
-    'width' => $width,
-    'portrait' => false,
-    'landscape' => false,
-    'quadratic' => false,
-
-  );
-
-  if ( $height > $width ){
-
-    $orientation["portrait"] = true;
-    $orientation["get_orientation"] = 'portrait';
-
-  } else if ( $width > $height ){
-
-    $orientation["landscape"] = true;
-    $orientation["get_orientation"] = 'landscape';
-
-  } else {
-
-    $orientation["quadratic"] = true;
-    $orientation["get_orientation"] = 'quadratic';
-
-  }
-
-  return $orientation;
-
 }
