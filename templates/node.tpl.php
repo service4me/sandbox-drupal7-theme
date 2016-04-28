@@ -80,7 +80,7 @@
  * @ingroup themeable
  */
 ?><?php 
-  // echo '<pre>', var_dump($node->field_image), '</pre>';
+  // echo '<pre>', var_dump(isset($node->field_image)), '</pre>';
   // echo '<pre>', var_dump($content), '</pre>';
 ?>
 <<?php if ( !$page ) { 
@@ -89,15 +89,19 @@
 
 	<div class="inner">
     <?php if ( !$page ) { ?>
-      <?php if ( $node->field_image ) { ?>
-      <a href="<?php print $node_url; ?>" class="post-thumbnail" style="background-image:url(<?php print file_create_url($node->field_image['und'][0]['uri']) ?>);"><img src="<?php print image_style_url('thumbnail', $node->field_image['und'][0]['uri']) ?>" /></a>
+      <?php if ( isset($node->field_image) ) { 
+        $node_image = field_get_items('node', $node, 'field_image');        
+      ?>
+      <a href="<?php print $node_url; ?>" class="post-thumbnail" style="background-image:url(<?php print file_create_url($node_image[0]['uri']) ?>);"><img src="<?php print file_create_url($node_image[0]['uri']) ?>" /></a>
       <?php } ?>
       <h2<?php print $title_attributes; ?> class="title"><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
     <?php } else { ?>
       <aside class="sidebar sidebar-meta meta wrapper container entry-meta">
         <ul class="inner clearfix">
-        <?php if ( $node->field_image ) { ?>
-          <li class="post-thumbnail"><img src="<?php print image_style_url('thumbnail', $node->field_image['und'][0]['uri']) ?>"  /></li>
+        <?php if ( isset($node->field_image) ) { 
+          $node_image = field_get_items('node', $node, 'field_image'); 
+        ?> 
+          <li class="post-thumbnail"><img src="<?php print file_create_url($node_image[0]['uri']) ?>"  /></li>
         <?php } ?>
           <li class="author">
           <?php if ( !empty($user_picture) ): ?>
